@@ -1,57 +1,320 @@
-<!DOCTYPE html>
 <html>
-
-<body>
-  <div id="root"></div>
-  <script type="text/babel">
-    const se = new Audio('tada.wav');
-    const App = () => {
-      const [verified, setVerified] = React.useState(false);
-      React.useEffect(() => {
-        grecaptcha.render('html_element', {
-          sitekey: '6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt',
-          callback: (response) => {
-            se.play();
-            setVerified(true);
-          }
-        });
-      }, []);
-      return (
-            <section className="hero is-fullheight">
-              <div className="hero-body">
-                <div className="container has-text-centered">
-                  <p className="title">
-                    自分はロボットではないかと不安な方へ
-                  </p>
-                  <p className="subtitle">
-                    下のチェックボックスをクリックして確かめてみましょう。
-                  </p>
-                  <div style={{
-                    marginRight: 'auto',
-                    marginLeft: 'auto',
-                    textAlign: 'center',
-                    width: '300px',
-                    marginTop: '20px'
-                  }}>
-                    <div id="html_element"></div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
-        </div>
-      )
+<head>
+  <link rel="icon" href="icon.png">
+  <title>-中学生のオンライン学習-中学生のための無料のオンライン学習サイト</title>
+  <style>
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: gray;
     }
-    const onloadCallback = () => {
-      ReactDOM.render(
-        <App />,
-        document.getElementById('root')
-      );
-    };
+    .card {
+      width: 600px;
+      margin: 10px;
+      border: 5px solid rgb(110, 110, 110);
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+    .card-image {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: 5%;
+    }
+    .card-title {
+      font-weight: bold;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .card-channel {
+      padding: 10px;
+    }
+    .card-description {
+      padding: 10px;
+    }
+    .card-button {
+      display: block;
+      width: 30%;
+      padding: 10px;
+      background-color: rgb(110, 110, 110);
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      background-color: red;
+      border-radius: 10px
+    }
+  </style>
+  <style>
+    /* ヘッダーのスタイルを定義する */
+    .header {
+      position: fixed;
+      /* ヘッダーを固定する */
+      top: 0;
+      /* ヘッダーの位置をページの上端に設定する */
+      width: 100%;
+      /* ヘッダーの幅をページ全体に設定する */
+      background-color: white;
+      /* ヘッダーの背景色を白に設定する */
+      z-index: 1;
+      /* ヘッダーが他の要素よりも前面に表示されるようにする */
+      
+       /* ヘッダーの高さを設定する */
+       height: 80px;
+    
+       /* ヘッダーの中身を横に並べる */
+       display: flex;
+    
+       /* ヘッダーの中身を中央寄せにする */
+       align-items: center;
+    
+       /* ヘッダーの中身の間隔を開ける */
+       justify-content: space-around;
+    
+       /* ヘッダーの下に影をつける */
+       box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+      
+    }
+    
+    /* 検索フォームのスタイルを定義する */
+    #search-form {
+        /* 検索フォームを横に並べる */
+        display:flex;
+    
+        /* 検索フォームの高さを設定する */
+        height:40px;
+    
+        /* 検索フォームの幅を設定する */
+        width:500px;
+    
+        /* 検索フォームの背景色を灰色に設定する */
+        background-color:#f0f0f0;
+    
+        /* 検索フォームの角を丸くする */
+        border-radius:20px;
+    
+        /* 検索フォームの中身を中央寄せにする */
+        align-items:center;
+    
+        /* 検索フォームの中身の間隔を開ける */
+        justify-content:center;
+    
+        /* 検索フォームに影をつける */
+        box-shadow: inset 0px -2px 4px rgba(0,0,0,0.1);
+        
+    }
+    
+    /* 検索入力欄のスタイルを定義する */
+    #search-input {
+        /* 検索入力欄の枠線を消す */
+        border:none;
+    
+        /* 検索入力欄の背景色を透明に設定する */
+        background-color:transparent;
+    
+        /* 検索入力欄のフォントサイズを設定する */
+        font-size:16px;
+    
+        /* 検索入力欄の幅を設定する */
+        width:400px;
+    
+        /* 検索入力欄の高さを設定する */
+        height:30px;
+    
+        /* 検索入力欄の左側に余白を設ける */
+        padding-left:10px;
+    }
+    
+    /* 検索ボタンのスタイルを定義する */
+    #search-button {
+        /* 検索ボタンの枠線を消す */
+        border:none;
+    
+        /* 検索ボタンの背景色を透明に設定する */
+        background-color:transparent;
+    
+        /* 検索ボタンのフォントサイズを設定する */
+        font-size:16px;
+    
+        /* 検索ボタンのカーソルをポインターに設定する */
+        cursor:pointer;
+    }
+    
+    /* ヘッダーのロゴのスタイルを定義する */
+    #header-logo {
+      /* ヘッダーのロゴの高さを設定する */
+      height:50px;
+    }
+    
+    /* ヘッダーのタイトルのスタイルを定義する */
+    #header-title {
+      /* ヘッダーのタイトルのフォントサイズを設定する */
+      font-size:30px;
+    
+      /* ヘッダーのタイトルの太さを設定する */
+      font-weight:900;
+    }
+  </style>
+  <style>
+    .body {
+      background-color: gray;
+    }
+  </style>
+</head>
+<body class="body">
+  <div class="header" style="left: 0px; right: 0px;">
+    <!-- ヘッダーとして固定したい部分をdivタグで囲む -->
+      <img id="header-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="ロゴ">
+      <h1 id="header-title">動画検索</h1>
+      <form id="search-form" style="margin-bottom: 0;">
+        <input type="text" id="search-input" placeholder="検索キーワードを入力">
+        <button type="submit" id="search-button">🔍</button>
+      </form>
+  </div>
+  <div style="width: 100%; height: 80px;"></div>
+  <center>
+  <h1 style="color: white;">動画前に必ず周りの確認と音量の確認をしてください。</h3></center>
+  <div id="container" class="container"></div>
+  <script>
+    // APIキー
+    const key = "AIzaSyD9WMLKK7eipIyMoMCf-6b8TzNHhnYTSgs";
+    // 検索フォーム
+    const searchForm = document.getElementById("search-form");
+    // 検索ボタン
+    const searchButton = document.getElementById("search-button");
+    // 検索入力欄
+    const searchInput = document.getElementById("search-input");
+    // コンテナ
+    const container = document.getElementById("container");
+    // 検索ボタンが押されたときの処理
+    searchButton.addEventListener("click", (event)=>{
+      // フォームの送信をキャンセル
+      event.preventDefault();
+      // 検索キーワードを取得
+      const query = searchInput.value;
+      // 検索キーワードが空でない場合
+      if (query) {
+        // YouTube Data APIにリクエストを送る
+        fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&regionCode=jp&q=${query}&key=${key}&maxResults=50`).then((response)=>response.json())// レスポンスをJSONに変換
+        .then((data)=>{
+          // コンテナの中身を空にする
+          container.innerHTML = "";
+          // データの中のアイテムを取得
+          const items = data.items;
+          // アイテムがある場合
+          if (items.length > 0) {
+            // アイテムごとに処理
+            items.forEach((item)=>{
+              // 動画のIDを取得
+              const videoId = item.id.videoId;
+              // 動画のタイトルを取得
+              const title = item.snippet.title;
+              // 動画の説明を取得
+              const description = item.snippet.description;
+              // 動画のサムネイル画像のURLを取得
+              const imageUrl = item.snippet.thumbnails.high.url;
+              // 動画のURLを生成
+              const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+              // チャンネルのIDを取得
+              const channelId = item.snippet.channelId;
+              // チャンネルの情報を取得する関数
+              const getChannelInfo = (channelId)=>{
+                return fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${key}`).then((response)=>response.json())// レスポンスをJSONに変換
+                .then((data)=>{
+                  // チャンネルの情報がある場合
+                  if (data.items.length > 0) {
+                    // チャンネル名を取得
+                    const channelName = data.items[0].snippet.title;
+                    // チャンネル名を返す
+                    return channelName;
+                  } else {
+                    // チャンネルの情報がない場合は空文字を返す
+                    return "チャンネルの情報が取得できません";
+                  }
+                }
+                ).catch((error)=>{
+                  // エラーが発生した場合は空文字を返す
+                  return "エラーが発生しました";
+                }
+                );
+              }
+              ;
+              // カード要素を作成する関数
+              const createCard = (title,description,imageUrl,videoUrl,channelName)=>{
+                // カード要素を作成
+                const card = document.createElement("div");
+                card.className = "card";
+                // カード画像要素を作成
+                const cardImage = document.createElement("img");
+                cardImage.className = "card-image";
+                cardImage.src = imageUrl;
+                cardImage.alt = title;
+                // カードタイトル要素を作成
+                const cardTitle = document.createElement("div");
+                cardTitle.className = "card-title";
+                cardTitle.textContent = title;
+                // カードチャンネル要素を作成
+                const cardChannel = document.createElement("div");
+                cardChannel.className = "card-channel";
+                cardChannel.textContent = channelName;
+                // カード説明要素を作成
+                const cardDescription = document.createElement("div");
+                cardDescription.className = "card-description";
+                cardDescription.textContent = description;
+                // iframeタグを作成する
+                var iframe = document.createElement("iframe");
+                // src属性に埋め込み用のURLを設定する
+                iframe.src = "https://www.youtube.com/embed/" + videoId;
+                iframe.width = 600
+                iframe.height = 376
+                // カードボタン要素を作成
+                const cardButton = document.createElement("a");
+                cardButton.className = "card-button";
+                // href属性にiframeタグのsrc属性と同じ値に変更する
+                cardButton.href = iframe.src;
+                cardButton.target = "_blank";
+                cardButton.textContent = "動画を見る";
+                // カードボタン要素にクリックイベントの関数を追加する
+                cardButton.addEventListener("click", (event)=>{
+                  // フォームの送信をキャンセル
+                  event.preventDefault();
+                  // カード要素の中身をiframeタグに置き換える
+                  card.innerHTML = "";
+                  card.appendChild(iframe);
+                }
+                );
+                // カード要素にカード画像、カードタイトル、カードチャンネル、カード説明、カードボタンを追加
+                card.appendChild(cardImage);
+                card.appendChild(cardTitle);
+                card.appendChild(cardChannel);
+                card.appendChild(cardDescription);
+                card.appendChild(cardButton);
+                return card;
+              }
+              ;
+              // チャンネルの情報を取得してからカード要素を作成する
+              getChannelInfo(channelId).then((channelName)=>{
+                // カード要素を作成する
+                const card = createCard(title, description, imageUrl, videoUrl, channelName);
+                // コンテナにカード要素を追加する
+                container.appendChild(card);
+              }
+              );
+            }
+            );
+          } else {
+            // アイテムがない場合はメッセージを表示
+            container.textContent = "検索結果がありませんでした。";
+          }
+        }
+        ).catch((error)=>{
+          // エラーが発生した場合はメッセージを表示
+          container.textContent = "エラーが発生しました。　APIキーが更新されたか、jsonファイルを読み込めません。　ページをリロードしてください。";
+        }
+        );
+      }
+    }
+    );
   </script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
-  </script>
-
 </body>
-
 </html>

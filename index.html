@@ -3,61 +3,53 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         #login-form {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid black;
-            padding: 20px;
-            background-color: white;
-        }
-        #login-button {
             display: block;
-            margin-top: 10px;
         }
-        #after-login {
+        #content {
             display: none;
         }
     </style>
 </head>
 <body>
-    <h1>ようこそ！</h1>
     <div id="login-form">
-        <h2>ログイン</h2>
-        <form method="post" action="#" onsubmit="return validateForm()">
-            <label for="username">ユーザー名:</label>
-            <input type="text" id="username" name="username" required><br>
-            <label for="password">パスワード:</label>
-            <input type="password" id="password" name="password" required><br>
-            <div class="g-recaptcha" data-sitekey="6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt"></div>
-            <input type="submit" id="login-button" value="ログイン">
-        </form>
+        <h1>ログイン画面</h1>
+        <p>パスワードを入力してください。</p>
+        <input type="password" id="password-input" placeholder="パスワード">
+        <div class="g-recaptcha" data-sitekey="6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt"></div>
+        <button id="login-button" onclick="login()">ログイン</button>
     </div>
-    <div id="after-login">
-        <h1>ログイン後の画面</h1>
+    <div id="content">
+        <div><h1>ログイン後の画面</h1></div>
     </div>
     <script>
-        // ログイン画面を表示する関数
-        function showLoginForm() {
-            document.getElementById("login-form").style.display = "block";
-        }
-        // ページが読み込まれたときにログイン画面を表示する
-        window.onload = showLoginForm;
-        // フォームのバリデーションをする関数
-        function validateForm() {
-            // reCAPTCHAのチェックボックスがチェックされているか確認する
-            var response = grecaptcha.getResponse();
-            if (response.length == 0) {
-                // チェックされていない場合はアラートを出してフォームの送信を中止する
-                alert("reCAPTCHAのチェックボックスにチェックしてください。");
-                return false;
-            } else {
-                // チェックされている場合はログイン画面を非表示にして、ログイン後の画面を表示する
-                document.getElementById("login-form").style.display = "none";
-                document.getElementById("after-login").style.display = "block";
-                return false; // フォームの送信はしない
+        function login() {
+            // チェックボックスにチェックが付いているか確認
+            var recaptcha = document.querySelector('.g-recaptcha-response').value;
+            if (recaptcha === "") {
+                alert("reCAPTCHAをチェックしてください。");
+                return;
             }
+            // パスワードを入力したか確認
+            var password = document.getElementById("password-input").value;
+            if (password === "") {
+                alert("パスワードを入力してください。");
+                return;
+            }
+            // パスワードがファイル内のどれかと一致するか確認
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "password.txt", true);
+            xhr.onload = function() {
+                var passwords = xhr.responseText.split("\n");
+                if (passwords.includes(password)) {
+                    // ログイン成功
+                    document.getElementById("login-form").style.display = "none";
+                    document.getElementById("content").style.display = "block";
+                } else {
+                    // ログイン失敗
+                    alert("パスワードが間違っています。");
+                }
+            };
+            xhr.send();
         }
     </script>
 </body>

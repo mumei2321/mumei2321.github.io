@@ -1,56 +1,49 @@
 <html>
 <head>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <style>
-        #login-form {
-            display: block;
-        }
-        #content {
-            display: none;
-        }
-    </style>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    // パスワードの配列を作成
+    var passwords = ["g)WxTMeJ%6im78-/9Tc7", "#kn8Y!zBH_WaA%TKqa9C", "H-XGzu2gQB-X!hVw8UgH", "%38SwyA/D5Nn+K+2TGR%", "5Fc*U*R(5QAuF_BXt,L&", "29&sqLZ3&fBk)gi!-n7F", "L_&f/m8WsX$q~ea+D6Bi", "5j%|y6wR(/4QuRmvwwd)", "e.i|h$R#y5ZHa3Kc2p/D", "Wn%sc$aM$ymE(5!w#*Tj", "%#FL)Jx-SV,vDs7n7yYB", ",iNM(7Er|p96ppueMFpk", "YB8q#cxgvDD+aSF5qR&(", "N|mLqE.eiS6sV-bJhEPH", "DPYaL3YZ5J$i!f!4YvNM", "wc-n.f&,6pgN|)NHWw#9", "CA$YCAt#x.5NC!TmwBUi", "ez99S6$*&2a8H|yjmPbT", ".X+2qDesq#|NT)J|t&*G", "hheVk-5Znb,/#tkSS9kT", "a)gi/L9zGLxMfRmiE,+z", "#,AK%is9%*m*a&aR&MYs", "55d6a!(aXB8/t)u*BF$e", "3xksLKBQtns)twh_e(NZ", "aDGwHRCR#bGBf)6(Ux2C", "SRH+/$Y6cWmK8,f*4jCU", "se*3-3+XzahaGARvL,f7", "6)eVm8h5kn#Qzc|*~Rk8", "NsbYg9|4_E+5m)Y5$irj", "C85Q+38F)zUaPJ$xx4g(", "9hDuYxRwe,pJD3-PgkxX", "4p!c6UnzcjQ8PpB2mAkY", "h,dg#xV5355ku)X/2KeU", "Vi7qe4Kb6%fJ#CzVHd/$", "67V,c3RXXCF%Vh#dW(hF", "W.ES.8)4$~P3F_FBirgH", "yY46jg~iYZhs&NVDWxxQ", "76QTLRYN/6NRv3#zs%Wd", "zd&rkZDDp+c3DJxD(_r4", "X$u!A72jRXVYR//rw$%F", "zgv(SzQcgJ_!X&54f-uR", "njAyha4NKDqPP3GM3uXk", "a),E1W&sPvntZukTeQWU", "DD3huGX3VH7_m/EgftMX", "qqH/-u)B*X|/fd7/~cpZ", "hjJ_B(Pz5nkxs/mGf.iV", "7|2V4F.zWqDNYKB/(qT9", "xhn84NT+VKf.UwVAwfkG", "r7b6ZcUhitsQq&ZQpii-", "A8FXHNEuDDByi&#&pFJ6"];
+
+    // ログインボタンがクリックされたときの処理
+    function login() {
+      // パスワードの入力値を取得
+      var password = document.getElementById("password").value;
+      // reCAPTCHAのチェック状態を取得
+      var recaptcha = document.getElementById("recaptcha").checked;
+      // パスワードとreCAPTCHAのチェックが正しいかどうかを判定
+      if (passwords.includes(password) && recaptcha) {
+        // 正しい場合はログイン画面を非表示にする
+        document.getElementById("login").style.display = "none";
+        // 表示したいページを表示する
+        document.getElementById("page").style.display = "block";
+      } else {
+        // 正しくない場合はreCAPTCHAのチェックを外す
+        document.getElementById("recaptcha").checked = false;
+        // エラーメッセージを表示する
+        alert("パスワードまたはreCAPTCHAのチェックが正しくありません。");
+      }
+    }
+  </script>
 </head>
 <body>
-    <div id="login-form">
-        <h1>ログイン画面</h1>
-        <p>パスワードを入力してください。</p>
-        <input type="password" id="password-input" placeholder="パスワード">
-        <div class="g-recaptcha" data-sitekey="6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt"></div>
-        <button id="login-button" onclick="login()">ログイン</button>
-    </div>
-    <div id="content">
-        <div><h1>ログイン後の画面</h1></div>
-    </div>
-    <script>
-        function login() {
-            // チェックボックスにチェックが付いているか確認
-            var recaptcha = document.querySelector('.g-recaptcha-response').value;
-            if (recaptcha === "") {
-                alert("reCAPTCHAをチェックしてください。");
-                return;
-            }
-            // パスワードを入力したか確認
-            var password = document.getElementById("password-input").value;
-            if (password === "") {
-                alert("パスワードを入力してください。");
-                return;
-            }
-            // パスワードがファイル内のどれかと一致するか確認
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "password.txt", true);
-            xhr.onload = function() {
-                var passwords = xhr.responseText.split("\n");
-                if (passwords.includes(password)) {
-                    // ログイン成功
-                    document.getElementById("login-form").style.display = "none";
-                    document.getElementById("content").style.display = "block";
-                } else {
-                    // ログイン失敗
-                    alert("パスワードが間違っています。");
-                }
-            };
-            xhr.send();
-        }
-    </script>
+  <!-- ログイン画面のコンテナ -->
+  <div id="login">
+    <!-- ログインフォーム -->
+    <form>
+      <!-- パスワードの入力欄 -->
+      <p>パスワードを入力してください。</p>
+      <input type="password" id="password">
+      <!-- reCAPTCHAのウィジェット -->
+      <div class="g-recaptcha" data-sitekey="6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt"></div>
+      <!-- ログインボタン -->
+      <button type="button" onclick="login()">ログイン</button>
+    </form>
+  </div>
+  <!-- 表示したいページのコンテナ -->
+  <div id="page" style="display: none;">
+    <!-- 表示したいページのコード -->
+    <div><h1>表示したいページ</h1></div>
+  </div>
 </body>
 </html>

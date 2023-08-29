@@ -79,7 +79,12 @@
         }
     </style>
 </head>
-<body>
+<body style="
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+">
     <div id="login-form" class="container">
         <h1>ログインページ</h1>
         <form id="form" onsubmit="return validateForm()">
@@ -90,7 +95,14 @@
         </form>
     </div>
     <div id="display-page">
-        <iframe src="youtube.html"></iframe>
+        <iframe src="youtube.html" style="
+    border-left-width: 0px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    width: 100%;
+    height: 100%;
+"></iframe>
     </div>
     <script>
         // ログインに使用するパスワードの配列

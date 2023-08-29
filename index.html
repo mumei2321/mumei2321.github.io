@@ -16,13 +16,16 @@
             display: block;
             margin-top: 10px;
         }
+        #after-login {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <h1>ようこそ！</h1>
     <div id="login-form">
         <h2>ログイン</h2>
-        <p>ユーザー名とパスワードを入力してください。</p>
-        <form action="#" method="post">
+        <form method="post" action="#" onsubmit="return validateForm()">
             <label for="username">ユーザー名:</label>
             <input type="text" id="username" name="username" required><br>
             <label for="password">パスワード:</label>
@@ -31,17 +34,30 @@
             <input type="submit" id="login-button" value="ログイン">
         </form>
     </div>
+    <div id="after-login">
+        <h1>ログイン後の画面</h1>
+    </div>
     <script>
-        // ページが読み込まれたら、ログイン画面を表示する関数を呼び出す
-        window.onload = function() {
-            showLoginForm();
-        };
         // ログイン画面を表示する関数
         function showLoginForm() {
-            // ログイン画面の要素を取得する
-            var loginForm = document.getElementById("login-form");
-            // ログイン画面の要素のdisplayプロパティをblockに設定する
-            loginForm.style.display = "block";
+            document.getElementById("login-form").style.display = "block";
+        }
+        // ページが読み込まれたときにログイン画面を表示する
+        window.onload = showLoginForm;
+        // フォームのバリデーションをする関数
+        function validateForm() {
+            // reCAPTCHAのチェックボックスがチェックされているか確認する
+            var response = grecaptcha.getResponse();
+            if (response.length == 0) {
+                // チェックされていない場合はアラートを出してフォームの送信を中止する
+                alert("reCAPTCHAのチェックボックスにチェックしてください。");
+                return false;
+            } else {
+                // チェックされている場合はログイン画面を非表示にして、ログイン後の画面を表示する
+                document.getElementById("login-form").style.display = "none";
+                document.getElementById("after-login").style.display = "block";
+                return false; // フォームの送信はしない
+            }
         }
     </script>
 </body>

@@ -1,25 +1,50 @@
 <html>
 <head>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
-var password = "secret"; // パスワードを変更する場合はここを編集してください
-var input = prompt("パスワードを入力してください");
-if (input == password) {
-  document.getElementById("content").style.display = "block";
-} else {
-  alert("パスワードが違います");
-  window.location.reload();
-}
-function verifyCaptcha(token) {
-  alert("reCAPTCHAが正常に動作しました");
-}
-</script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        #login-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            padding: 20px;
+            background-color: white;
+        }
+        #login-button {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<div id="content" style="display: none;">
-<h1>ログイン成功</h1>
-<p>ここにコンテンツを書いてください</p>
-</div>
-<div class="g-recaptcha" data-sitekey="6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt" data-callback="verifyCaptcha"></div>
+    <h1>ログイン画面を出すコードの例</h1>
+    <p>このページは本格的に情報を取り扱うサイトのようにログイン画面にreCAPTCHAも導入しています。</p>
+    <div id="login-form">
+        <h2>ログイン</h2>
+        <p>ユーザー名とパスワードを入力してください。</p>
+        <form action="#" method="post">
+            <label for="username">ユーザー名:</label>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required><br>
+            <div class="g-recaptcha" data-sitekey="6LcTMdgnAAAAABoX1MHBYI-P9EtfiiXCjyj_nvBt"></div>
+            <input type="submit" id="login-button" value="ログイン">
+        </form>
+    </div>
+    <script>
+        // ページが読み込まれたら、ログイン画面を表示する関数を呼び出す
+        window.onload = function() {
+            showLoginForm();
+        };
+        // ログイン画面を表示する関数
+        function showLoginForm() {
+            // ログイン画面の要素を取得する
+            var loginForm = document.getElementById("login-form");
+            // ログイン画面の要素のdisplayプロパティをblockに設定する
+            loginForm.style.display = "block";
+        }
+    </script>
 </body>
 </html>

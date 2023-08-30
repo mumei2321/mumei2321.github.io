@@ -3,24 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>GitHub掲示板</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <div class="container">
     <h1>GitHub掲示板</h1>
-  </header>
-  <main>
-    <section id="thread">
-      <h2>スレッドタイトル</h2>
-      <article>
-        <p>スレッド本文</p>
-      </article>
-      <ul class="replies">
-        <li>
-          <strong>投稿者名</strong> <span class="date">2023-08-30 16:50:33</span>
-          <p>返信本文</p>
-        </li>
-      </ul>
-    </section>
-  </main>
+    <h2>スレッド一覧</h2>
+    <ul class="threads">
+      <li>
+        <a href="#">
+          <span class="name">スレッド名</span>
+          <span class="timestamp">2023-08-30 17:14</span>
+          <span class="post-count">10</span>
+        </a>
+      </li>
+    </ul>
+    <h2>投稿フォーム</h2>
+    <form action="/post" method="POST">
+      <input type="text" name="name" placeholder="名前">
+      <input type="text" name="body" placeholder="本文">
+      <input type="submit" value="投稿">
+    </form>
+  </div>
 </body>
 </html>

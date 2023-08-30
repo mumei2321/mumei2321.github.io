@@ -121,6 +121,98 @@
        document.getElementById("name").value = "";
        document.getElementById("message").value = "";
     };
+    //投稿ボタンをクリックしたときの処理
+    document.getElementById("submit").onclick = function() {
+      //入力された名前と本文を取得
+      var name = document.getElementById("name").value;
+      var message = document.getElementById("message").value;
+
+      //名前と本文が空でないかチェック
+      if (name == "" || message == "") {
+        alert("名前と本文を入力してください");
+        return;
+      }
+
+      //現在の日時を取得
+      var date = new Date();
+
+      //日時を文字列に変換
+      var year = date.getFullYear();
+      var month = ("0" + (date.getMonth() + 1)).slice(-2);
+      var day = ("0" + date.getDate()).slice(-2);
+      var hour = ("0" + date.getHours()).slice(-2);
+      var minute = ("0" + date.getMinutes()).slice(-2);
+      var second = ("0" + date.getSeconds()).slice(-2);
+      var datetime = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
+
+      //投稿内容を表形式で作成
+      var post = document.createElement("tr");
+      var nameCell = document.createElement("td");
+      nameCell.textContent = name;
+      var messageCell = document.createElement("td");
+      messageCell.textContent = message;
+      var datetimeCell = document.createElement("td");
+      datetimeCell.textContent = datetime;
+
+      //投稿内容を表に追加
+      post.appendChild(nameCell);
+      post.appendChild(messageCell);
+      post.appendChild(datetimeCell);
+      document.getElementById("posts").appendChild(post);
+
+      //入力欄を空にする
+      document.getElementById("name").value = "";
+      document.getElementById("message").value = "";
+
+      //投稿内容を保存
+      savePost(name, message, datetime);
+    };
+
+    //投稿内容を保存する関数
+    function savePost(name, message, datetime) {
+      //ファイル名を生成
+      var filename = datetime + ".txt";
+
+      //ファイルの書き込み準備
+      var fs = require("fs");
+      var wstream = fs.createWriteStream(filename, { encoding: "utf-8" });
+
+      //投稿内容を書き込む
+      wstream.write(name + "," + message + "\n");
+
+      //ファイルの書き込みを完了
+      wstream.end();
+    }
+//ファイルの削除処理
+function deleteOldPosts() {
+  //現在の日時を取得
+  var date = new Date();
+
+  //3ヶ月前の日時を取得
+  var threeMonthsAgo = new Date(date.getFullYear(), date.getMonth() - 3, date.getDate());
+
+  //3ヶ月前の日時以前のファイルを削除
+  var fs = require("fs");
+  fs.readdir(".", function(err, files) {
+    if (err) {
+      return console.log(err);
+    }
+
+    for (var i = 0; i < files.length; i++) {
+      var filename = files[i];
+      var dateStr = filename.substring(0, 10);
+      var datetime = new Date(dateStr);
+
+      if (datetime < threeMonthsAgo) {
+        fs.unlink(filename, function(err) {
+          if (err) {
+            return console.log(err);
+          }
+        });
+      }
+    }
+  });
+}
   </script>
 </body>
 </html>

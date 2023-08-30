@@ -1,144 +1,61 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-    <title>掲示板</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F0F0F0;
-        }
-        h1 {
-            text-align: center;
-            color: #333333;
-        }
-        #board {
-            width: 80%;
-            margin: 0 auto;
-            border: 1px solid #CCCCCC;
-            background-color: #FFFFFF;
-        }
-        .post {
-            padding: 10px;
-            border-bottom: 1px solid #CCCCCC;
-        }
-        .post:nth-child(even) {
-            background-color: #F9F9F9;
-        }
-        .name {
-            font-weight: bold;
-            color: #333333;
-        }
-        .date {
-            font-size: 12px;
-            color: #999999;
-        }
-        .content {
-            margin-top: 5px;
-            white-space: pre-wrap;
-        }
-        #form {
-            width: 80%;
-            margin: 20px auto;
-        }
-        #name {
-            width: 20%;
-        }
-        #content {
-            width: 80%;
-            height: 100px;
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // 掲示板のデータを保存するためのgithubのgistのID
-            var gist_id = "5c54bcb8cfac3940b91e80a6171a0bfc";
-            
-            // 掲示板のデータを取得する関数
-            function getBoardData() {
-                $.ajax({
-                    url: "https://api.github.com/gists/" + gist_id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        // 掲示板のデータをJSON形式でパースする
-                        var board_data = JSON.parse(data.files["board.json"].content);
-                        // 掲示板の要素を空にする
-                        $("#board").empty();
-                        // 掲示板のデータを反映する
-                        for (var i = 0; i < board_data.length; i++) {
-                            var post = board_data[i];
-                            var post_html = "<div class='post'>" +
-                                            "<span class='name'>" + post.name + "</span>" +
-                                            "<span class='date'>
-                                            "<div class='content'>" + post.content + "</div>" +
-                                            "</div>";
-                            $("#board").append(post_html);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        alert("エラーが発生しました。");
-                    }
-                });
-            }
-
-            // 掲示板のデータを取得する
-            getBoardData();
-
-            // 投稿ボタンがクリックされたときの処理
-            $("#submit").click(function() {
-                // 入力された名前と内容を取得する
-                var name = $("#name").val();
-                var content = $("#content").val();
-                // 投稿データの検証
-                if (!validatePostData(name, content)) {
-                    return;
-                }
-                // 現在の日時を取得する
-                var date = new Date();
-                var year = date.getFullYear();
-                var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                var day = ("0" + date.getDate()).slice(-2);
-                var hour = ("0" + date.getHours()).slice(-2);
-                var minute = ("0" + date.getMinutes()).slice(-2);
-                var second = ("0" + date.getSeconds()).slice(-2);
-                var date_str = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
-                // 新しい投稿を作成する
-                var new_post = {
-                    name: name,
-                    content: content,
-                    date: date_str
-                };
-                // 掲示板のデータを更新する
-                updateBoardData(new_post);
-                // 入力欄を空にする
-                $("#name").val("");
-                $("#content").val("");
-            });
-        });
-
-        // 投稿データの検証を行う関数
-        function validatePostData(name, content) {
-            // 名前と内容が空かどうかをチェックする
-            if (name == "" || content == "") {
-                alert("名前と内容を入力してください。");
-                return false;
-            }
-            // 内容が適切な文字数以内かどうかをチェックする
-            if (content.length > 1000) {
-                alert("内容は1000文字以内にしてください。");
-                return false;
-            }
-            return true;
-        }
-    </script>
+  <meta charset="utf-8">
+  <title>GitHub掲示板</title>
 </head>
 <body>
-    <h1>掲示板</h1>
-    <div id="board"></div>
-    <div id="form">
-        <input type="text" id="name" placeholder="名前">
-        <textarea id="content" placeholder="内容"></textarea>
-        <button id="submit">投稿</button>
-    </div>
+
+  <header>
+    <h1>GitHub掲示板</h1>
+  </header>
+
+  <div id="board">
+    <ul class="threads">
+      <!-- ここにスレッド一覧が表示されます -->
+    </ul>
+  </div>
+
+  <form id="new-thread" action="/new-thread" method="post">
+    <input type="text" name="title" placeholder="スレッドタイトル">
+    <input type="text" name="message" placeholder="投稿内容">
+    <input type="submit" value="新規スレッド作成">
+  </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    // スレッド一覧を取得する
+    $.ajax({
+      url: "/threads",
+      type: "get",
+      success: function(data) {
+        for (var i = 0; i < data.length; i++) {
+          var thread = data[i];
+          var li = $("<li>");
+          li.append($("<a href='/thread/" + thread.id + "'>" + thread.title + "</a>"));
+          li.append($("<span class='last-post'>" + thread.last_post_at + "</span>"));
+          $(".threads").append(li);
+        }
+      }
+    });
+
+    // 新規スレッド作成
+    $("#new-thread").submit(function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: $(this).attr("action"),
+        type: $(this).attr("method"),
+        data: $(this).serialize(),
+        success: function(data) {
+          // スレッドを追加する
+          var li = $("<li>");
+          li.append($("<a href='/thread/" + data.id + "'>" + data.title + "</a>"));
+          li.append($("<span class='last-post'>" + data.last_post_at + "</span>"));
+          $(".threads").append(li);
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>

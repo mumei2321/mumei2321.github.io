@@ -85,36 +85,37 @@
   <script>
     /* 追加するコード */
     const ul = document.querySelector("ul");
-    const content = document.querySelector(".content");
+const content = document.querySelector(".content");
 
-    ul.addEventListener("click", function(event) {
-      const target = event.target;
+ul.addEventListener("click", function(event) {
+  const target = event.target;
 
-      if (target.tagName === "A") {
-        content.classList.toggle("show");
+  if (target.tagName === "A") {
+    content.classList.toggle("show");
 
-        if (target.classList.contains("kokugo")) {
-          content.innerHTML = "国語";
-        } else if (target.classlist.toggle("sugaku")) {
-          content.innerHTML = "数学";
-        } else if (target.classlist.toggle("eigo")) {
-          content.innerHTML = "英語";
-        } else if (target.classlist.toggle("rika")) {
-          content.innerHTML = "理科";
-        } else if (target.classlist.toggle("syakai")) {
-          content.innerHTML = "社会";
-        } else if (target.classlist.toggle("mypage")) {
-          content.innerHTML = "マイページ";
-        } else if (target.classlist.toggle("home")) {
-          content.innerHTML = `
-            このサイトは、中学生のための無料のオンライン学習サイトです。
-            あなたは、国語、数学、英語、理科、社会の５つの教科を選んで、その教科に関する基本的な知識や問題を学ぶことができます。
-            また、各教科には、クイズやテストを受けることができるボタンがあります。クイズやテストでは、正解や不正解や得点などのフィードバックが表示されます。
-            さらに、自分の学習状況や進度を確認できるマイページもあります。
-            それでは、あなたの好きな教科を選んで、楽しく学習しましょう！
-          `;
-        }
-      }
-    });
+    if (target.classList.contains("kokugo")) {
+      content.innerHTML = "国語";
+    } else if (target.classlist.toggle("sugaku")) {
+      content.innerHTML = "数学";
+    } else if (target.classlist.toggle("eigo")) {
+      content.innerHTML = "英語";
+    } else if (target.classlist.toggle("rika")) {
+      content.innerHTML = "理科";
+    } else if (target.classlist.toggle("syakai")) {
+      content.innerHTML = "社会";
+    } else if (target.classlist.toggle("mypage")) {
+      content.innerHTML = "マイページ";
+    } else if (target.classList.contains("home")) {
+      content.innerHTML = `
+        このサイトは、中学生のための無料のオンライン学習サイトです。
+        あなたは、国語、数学、英語、理科、社会の５つの教科を選んで、その教科に関する基本的な知識や問題を学ぶことができます。
+        また、各教科には、クイズやテストを受けることができるボタンがあります。クイズやテストでは、正解や不正解や得点などのフィードバックが表示されます。
+        さらに、自分の学習状況や進度を確認できるマイページもあります。
+        それでは、あなたの好きな教科を選んで、楽しく学習しましょう！
+      `;
+    }
+  }
+});
+
   </script>
 </body></html>

@@ -4,132 +4,199 @@
   <title>オンライン掲示板</title>
   <style>
     body {
-      background-color: lightblue;
+      background-color: #f0e0d6;
+      font-family: "メイリオ", Meiryo, sans-serif;
     }
     h1 {
       text-align: center;
+      color: #800000;
     }
-    form {
+    #thread {
+      width: 80%;
+      margin: 0 auto;
+      border: 1px solid #800000;
+    }
+    .post {
+      padding: 10px;
+      border-bottom: 1px dashed #800000;
+    }
+    .post-number {
+      color: #800000;
+      font-weight: bold;
+    }
+    .post-name {
+      color: #008000;
+      font-weight: bold;
+    }
+    .post-date {
+      color: #808080;
+    }
+    .post-content {
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+    #form {
+      width: 80%;
+      margin: 20px auto;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    input, textarea {
-      margin: 10px;
+    #form input, #form textarea {
+      width: 80%;
+      margin-bottom: 10px;
     }
-    button {
-      width: 100px;
+    #form button {
+      width: 20%;
       height: 40px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      border: 1px solid black;
-      margin: 10px;
-      padding: 10px;
-    }
-    span {
+      background-color: #800000;
+      color: white;
       font-weight: bold;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <h1 id="title">オンライン掲示板</h1>
-  <form id="settings">
-    <input type="text" id="board-title" placeholder="掲示板のタイトルを入力してください">
-    <input type="color" id="board-color" value="#ADD8E6">
-    <button type="submit">設定を変更</button>
-  </form>
-  <form id="post">
-    <input type="text" id="name" placeholder="名前を入力してください">
-    <textarea id="message" rows="5" cols="50" placeholder="メッセージを入力してください"></textarea>
-    <button type="submit">送信</button>
-  </form>
-  <ul id="messages"></ul>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <h1>オンライン掲示板</h1>
+  <div id="thread"></div>
+  <div id="form">
+    <input type="text" id="name" placeholder="名前" value="名無しさん">
+    <textarea id="content" placeholder="内容" rows="5"></textarea>
+    <button id="submit">書き込む</button>
+  </div>
   <script>
-    // サーバーとの通信用のソケットを作成
-    const socket = io("https://online-board.herokuapp.com/");
+    // 掲示板のデータを保存するためのgithubのリポジトリのURLを設定する
+    // リポジトリは事前に作成しておく必要がある
+    // リポジトリはpublicにすること
+    // リポジトリにはdata.jsonという名前の空のファイルを作成しておくこと
+    // リポジトリにはPersonal access tokenを使ってアクセスすること
+    // Personal access tokenは事前に生成しておく必要がある
+    // Personal access tokenはrepoスコープを持つ必要がある
+    // Personal access tokenは安全に保管すること
+    const repoUrl = "https://api.github.com/repos/your-username/your-repo-name/contents/data.json";
+    const token = "your-personal-access-token";
 
-    // HTML要素を取得
-    const title = document.getElementById("title");
-    const boardTitle = document.getElementById("board-title");
-    const boardColor = document.getElementById("board-color");
-    const settings = document.getElementById("settings");
-    const name = document.getElementById("name");
-    const message = document.getElementById("message");
-    const post = document.getElementById("post");
-    const messages = document.getElementById("messages");
-
-    // 設定フォームが送信されたときの処理
-    settings.addEventListener("submit", (event) => {
-      // デフォルトの動作をキャンセル
-      event.preventDefault();
-      // サーバーに設定変更を通知
-      socket.emit("change settings", {
-        title: boardTitle.value,
-        color: boardColor.value
+    // 掲示板のデータを取得する関数
+    async function getData() {
+      // githubのAPIを使ってdata.jsonファイルを取得する
+      let response = await fetch(repoUrl, {
+        method: "GET",
+        headers: {
+          "Authorization": "token " + token
+        }
       });
-      // 入力欄を空にする
-      boardTitle.value = "";
-      boardColor.value = "#ADD8E6";
-    });
-
-    // 投稿フォームが送信されたときの処理
-    post.addEventListener("submit", (event) => {
-      // デフォルトの動作をキャンセル
-      event.preventDefault();
-      // サーバーにメッセージ投稿を通知
-      socket.emit("post message", {
-        name: name.value,
-        message: message.value
-      });
-      // 入力欄を空にする
-      name.value = "";
-      message.value = "";
-    });
-
-    // サーバーから設定変更が通知されたときの処理
-    socket.on("change settings", (data) => {
-      // 掲示板のタイトルと背景色を変更する
-      title.textContent = data.title;
-      document.body.style.backgroundColor = data.color;
-    });
-
-    // サーバーからメッセージ投稿が通知されたときの処理
-    socket.on("post message", (data) => {
-      // メッセージを表示するための要素を作成
-      const li = document.createElement("li");
-      const span = document.createElement("span");
-      const p = document.createElement("p");
-      const button = document.createElement("button");
-      // 要素にデータをセット
-      span.textContent = data.name + " (" + data.date + ")";
-      p.textContent = data.message;
-      button.textContent = "削除";
-      // ボタンがクリックされたときの処理
-      button.addEventListener("click", () => {
-        // サーバーにメッセージ削除を通知
-        socket.emit("delete message", data.id);
-      });
-      // 要素を組み合わせてリストに追加
-      li.appendChild(span);
-      li.appendChild(p);
-      li.appendChild(button);
-      messages.appendChild(li);
-    });
-
-    // サーバーからメッセージ削除が通知されたときの処理
-    socket.on("delete message", (id) => {
-      // メッセージの要素を探す
-      const li = messages.querySelector(`li[data-id="${id}"]`);
-      // メッセージの要素があればリストから削除
-      if (li) {
-        messages.removeChild(li);
+      // レスポンスが正常ならば
+      if (response.ok) {
+        // レスポンスをJSON形式で解析する
+        let data = await response.json();
+        // data.jsonファイルの内容をBase64でデコードする
+        let content = atob(data.content);
+        // デコードした内容をJSON形式で解析する
+        let posts = JSON.parse(content);
+        // 掲示板のデータを返す
+        return posts;
+      } else {
+        // レスポンスが正常でなければエラーを投げる
+        throw new Error("データの取得に失敗しました: " + response.status);
       }
-    });
+    }
+
+    // 掲示板のデータを更新する関数
+    async function updateData(posts) {
+      // 掲示板のデータをJSON形式で文字列化する
+      let content = JSON.stringify(posts);
+      // 文字列化した内容をBase64でエンコードする
+      let encoded = btoa(content);
+      // githubのAPIを使ってdata.jsonファイルを更新するためのパラメータを作成する
+      let params = {
+        message: "update data",
+        content: encoded
+      };
+      // githubのAPIを使ってdata.jsonファイルを更新する
+      let response = await fetch(repoUrl, {
+        method: "PUT",
+        headers: {
+          "Authorization": "token " + token
+        },
+        body: JSON.stringify(params)
+      });
+      // レスポンスが正常ならば
+      if (response.ok) {
+        // レスポンスをJSON形式で解析する
+        let data = await response.json();
+        // 更新されたdata.jsonファイルのURLを返す
+        return data.content.url;
+      } else {
+        // レスポンスが正常でなければエラーを投げる
+        throw new Error("データの更新に失敗しました: " + response.status);
+      }
+    }
+
+    // 掲示板に投稿する関数
+    async function post() {
+      // 入力された名前と内容を取得する
+      let name = document.getElementById("name").value;
+      let content = document.getElementById("content").value;
+      // 名前と内容が空でなければ
+      if (name && content) {
+        try {
+          // 掲示板のデータを取得する
+          let posts = await getData();
+          // 新しい投稿を作成する
+          let post = {
+            number: posts.length + 1, // 投稿番号はデータの長さに1を足したもの
+            name: name, // 投稿者の名前は入力された名前
+            date: new Date().toLocaleString(), // 投稿日時は現在の日時
+            content: content // 投稿内容は入力された内容
+          };
+          // 掲示板のデータに新しい投稿を追加する
+          posts.push(post);
+          // 掲示板のデータを更新する
+          await updateData(posts);
+          // 入力欄を空にする
+          document.getElementById("content").value = "";
+          // 掲示板を表示する
+          show();
+        } catch (error) {
+          // エラーが発生したらアラートで表示する
+          alert(error.message);
+        }
+      }
+    }
+
+    // 掲示板を表示する関数
+    async function show() {
+      try {
+        // 掲示板のデータを取得する
+        let posts = await getData();
+        // 掲示板の要素を取得する
+        let thread = document.getElementById("thread");
+        // 掲示板の要素の中身を空にする
+        thread.innerHTML = "";
+        // 掲示板のデータに含まれる投稿ごとに繰り返す
+        for (let post of posts) {
+          // 投稿を表示するための要素を作成する
+          let div = document.createElement("div");
+          div.className = "post";
+          div.innerHTML = `
+            <span class="post-number">${post.number}</span>
+            <span class="post-name">${post.name}</span>
+            <span class="post-date">${post.date}</span>
+            <div class="post-content">${post.content}</div>
+          `;
+          // 掲示板の要素に投稿の要素を追加する
+          thread.appendChild(div);
+        }
+      } catch (error) {
+        // エラーが発生したらアラートで表示する
+        alert(error.message);
+      }
+    }
+
+    // ページが読み込まれたときに掲示板を表示する
+    window.addEventListener("load", show);
+
+    // 書き込むボタンが押されたときに掲示板に投稿する
+    document.getElementById("submit").addEventListener("click", post);
   </script>
-</body>
-</html>
+</body></html>

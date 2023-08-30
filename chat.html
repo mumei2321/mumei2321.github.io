@@ -69,38 +69,11 @@
                             var post = board_data[i];
                             var post_html = "<div class='post'>" +
                                             "<span class='name'>" + post.name + "</span>" +
-                                            "<span class='date'>" + post.date + "</span>" +
+                                            "<span class='date'>
                                             "<div class='content'>" + post.content + "</div>" +
                                             "</div>";
                             $("#board").append(post_html);
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        alert("エラーが発生しました。");
-                    }
-                });
-            }
-
-            // 掲示板のデータを更新する関数
-            function updateBoardData(board_data) {
-                $.ajax({
-                    url: "https://api.github.com/gists/" + gist_id,
-                    type: "PATCH",
-                    dataType: "json",
-                    headers: {
-                        // githubのアクセストークン（必要に応じて変更してください）
-                        Authorization: "token 1234567890abcdef"
-                    },
-                    data: JSON.stringify({
-                        files: {
-                            "board.json": {
-                                content: JSON.stringify(board_data)
-                            }
-                        }
-                    }),
-                    success: function(data) {
-                        // 掲示板のデータを取得する
-                        getBoardData();
                     },
                     error: function(xhr, status, error) {
                         alert("エラーが発生しました。");
@@ -116,9 +89,8 @@
                 // 入力された名前と内容を取得する
                 var name = $("#name").val();
                 var content = $("#content").val();
-                // 名前と内容が空でないかチェックする
-                if (name == "" || content == "") {
-                    alert("名前と内容を入力してください。");
+                // 投稿データの検証
+                if (!validatePostData(name, content)) {
                     return;
                 }
                 // 現在の日時を取得する
@@ -136,28 +108,28 @@
                     content: content,
                     date: date_str
                 };
-                // 掲示板のデータを取得する
-                $.ajax({
-                    url: "https://api.github.com/gists/" + gist_id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        // 掲示板のデータをJSON形式でパースする
-                        var board_data = JSON.parse(data.files["board.json"].content);
-                        // 新しい投稿を追加する
-                        board_data.push(new_post);
-                        // 掲示板のデータを更新する
-                        updateBoardData(board_data);
-                        // 入力欄を空にする
-                        $("#name").val("");
-                        $("#content").val("");
-                    },
-                    error: function(xhr, status, error) {
-                        alert("エラーが発生しました。");
-                    }
-                });
+                // 掲示板のデータを更新する
+                updateBoardData(new_post);
+                // 入力欄を空にする
+                $("#name").val("");
+                $("#content").val("");
             });
         });
+
+        // 投稿データの検証を行う関数
+        function validatePostData(name, content) {
+            // 名前と内容が空かどうかをチェックする
+            if (name == "" || content == "") {
+                alert("名前と内容を入力してください。");
+                return false;
+            }
+            // 内容が適切な文字数以内かどうかをチェックする
+            if (content.length > 1000) {
+                alert("内容は1000文字以内にしてください。");
+                return false;
+            }
+            return true;
+        }
     </script>
 </head>
 <body>

@@ -1,100 +1,172 @@
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>掲示板</title>
-  <style>
-    #board {
-      width: 80%;
-      margin: auto;
-      border: 1px solid black;
-      padding: 10px;
-    }
-    #form {
-      width: 80%;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    #name, #message {
-      margin: 5px;
-    }
-    #submit {
-      width: 100px;
-      align-self: center;
-    }
-  </style>
+    <title>掲示板</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+        #board {
+            width: 80%;
+            margin: 0 auto;
+            border: 1px solid #CCCCCC;
+            background-color: #FFFFFF;
+        }
+        .post {
+            padding: 10px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .post:nth-child(even) {
+            background-color: #F9F9F9;
+        }
+        .name {
+            font-weight: bold;
+            color: #333333;
+        }
+        .date {
+            font-size: 12px;
+            color: #999999;
+        }
+        .content {
+            margin-top: 5px;
+            white-space: pre-wrap;
+        }
+        #form {
+            width: 80%;
+            margin: 20px auto;
+        }
+        #name {
+            width: 20%;
+        }
+        #content {
+            width: 80%;
+            height: 100px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 掲示板のデータを保存するためのgithubのgistのID
+            var gist_id = "a1b2c3d4e5f6g7h8i9j0";
+            
+            // 掲示板のデータを取得する関数
+            function getBoardData() {
+                $.ajax({
+                    url: "https://api.github.com/gists/" + gist_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        // 掲示板のデータをJSON形式でパースする
+                        var board_data = JSON.parse(data.files["board.json"].content);
+                        // 掲示板の要素を空にする
+                        $("#board").empty();
+                        // 掲示板のデータを反映する
+                        for (var i = 0; i < board_data.length; i++) {
+                            var post = board_data[i];
+                            var post_html = "<div class='post'>" +
+                                            "<span class='name'>" + post.name + "</span>" +
+                                            "<span class='date'>" + post.date + "</span>" +
+                                            "<div class='content'>" + post.content + "</div>" +
+                                            "</div>";
+                            $("#board").append(post_html);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert("エラーが発生しました。");
+                    }
+                });
+            }
+
+            // 掲示板のデータを更新する関数
+            function updateBoardData(board_data) {
+                $.ajax({
+                    url: "https://api.github.com/gists/" + gist_id,
+                    type: "PATCH",
+                    dataType: "json",
+                    headers: {
+                        // githubのアクセストークン（必要に応じて変更してください）
+                        Authorization: "token 1234567890abcdef"
+                    },
+                    data: JSON.stringify({
+                        files: {
+                            "board.json": {
+                                content: JSON.stringify(board_data)
+                            }
+                        }
+                    }),
+                    success: function(data) {
+                        // 掲示板のデータを取得する
+                        getBoardData();
+                    },
+                    error: function(xhr, status, error) {
+                        alert("エラーが発生しました。");
+                    }
+                });
+            }
+
+            // 掲示板のデータを取得する
+            getBoardData();
+
+            // 投稿ボタンがクリックされたときの処理
+            $("#submit").click(function() {
+                // 入力された名前と内容を取得する
+                var name = $("#name").val();
+                var content = $("#content").val();
+                // 名前と内容が空でないかチェックする
+                if (name == "" || content == "") {
+                    alert("名前と内容を入力してください。");
+                    return;
+                }
+                // 現在の日時を取得する
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                var day = ("0" + date.getDate()).slice(-2);
+                var hour = ("0" + date.getHours()).slice(-2);
+                var minute = ("0" + date.getMinutes()).slice(-2);
+                var second = ("0" + date.getSeconds()).slice(-2);
+                var date_str = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
+                // 新しい投稿を作成する
+                var new_post = {
+                    name: name,
+                    content: content,
+                    date: date_str
+                };
+                // 掲示板のデータを取得する
+                $.ajax({
+                    url: "https://api.github.com/gists/" + gist_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        // 掲示板のデータをJSON形式でパースする
+                        var board_data = JSON.parse(data.files["board.json"].content);
+                        // 新しい投稿を追加する
+                        board_data.push(new_post);
+                        // 掲示板のデータを更新する
+                        updateBoardData(board_data);
+                        // 入力欄を空にする
+                        $("#name").val("");
+                        $("#content").val("");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("エラーが発生しました。");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-  <h1>掲示板</h1>
-  <div id="board"></div>
-  <form id="form">
-    <input type="text" id="name" placeholder="名前">
-    <textarea id="message" placeholder="メッセージ"></textarea>
-    <input type="submit" id="submit" value="投稿">
-  </form>
-  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
-  <script>
-    // Initialize Firebase
-    var firebaseConfig = {
-      apiKey: "AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY",
-      authDomain: "fir-chat-6a5c6.firebaseapp.com",
-      databaseURL: "https://fir-chat-6a5c6-default-rtdb.firebaseio.com",
-      projectId: "fir-chat-6a5c6",
-      storageBucket: "fir-chat-6a5c6.appspot.com",
-      messagingSenderId: "388351944597",
-      appId: "1:388351944597:web:e8f3ad39e537d3b2fd5f18"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    // Get a reference to the database service
-    var database = firebase.database();
-
-    // Get a reference to the board element
-    var board = document.getElementById("board");
-
-    // Listen for new messages and append them to the board
-    database.ref("messages").on("child_added", function(snapshot) {
-      var message = snapshot.val();
-      var name = message.name || "匿名";
-      var content = message.content || "";
-      var div = document.createElement("div");
-      div.innerHTML = "<b>" + name + "</b>: " + content;
-      board.appendChild(div);
-    });
-
-    // Get a reference to the form elements
-    var form = document.getElementById("form");
-    var name = document.getElementById("name");
-    var message = document.getElementById("message");
-    var submit = document.getElementById("submit");
-
-    // Prevent the default form submission behavior
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-    });
-
-    // Handle the submit button click
-    submit.addEventListener("click", function() {
-      // Get the user input
-      var nameValue = name.value;
-      var messageValue = message.value;
-
-      // Validate the input
-      if (nameValue == "" || messageValue == "") {
-        alert("名前とメッセージを入力してください。");
-        return;
-      }
-
-      // Push the message to the database
-      database.ref("messages").push({
-        name: nameValue,
-        content: messageValue
-      });
-
-      // Clear the input fields
-      name.value = "";
-      message.value = "";
-    });
-  </script>
+    <h1>掲示板</h1>
+    <div id="board"></div>
+    <div id="form">
+        <input type="text" id="name" placeholder="名前">
+        <textarea id="content" placeholder="内容"></textarea>
+        <button id="submit">投稿</button>
+    </div>
+</body>
 </html>

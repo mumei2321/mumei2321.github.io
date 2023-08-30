@@ -1,61 +1,55 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
   <title>GitHub掲示板</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-
-  <header>
+  <div class="container">
     <h1>GitHub掲示板</h1>
-  </header>
-
-  <div id="board">
-    <ul class="threads">
-      <!-- ここにスレッド一覧が表示されます -->
-    </ul>
+    <hr>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2>スレッド一覧</h2>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <a href="#">スレッド1</a>
+              </li>
+              <li class="list-group-item">
+                <a href="#">スレッド2</a>
+              </li>
+              <li class="list-group-item">
+                <a href="#">スレッド3</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h2>新規スレッド作成</h2>
+          </div>
+          <div class="card-body">
+            <form action="/create" method="post">
+              <div class="form-group">
+                <label for="title">タイトル</label>
+                <input type="text" class="form-control" id="title" name="title">
+              </div>
+              <div class="form-group">
+                <label for="body">本文</label>
+                <textarea class="form-control" id="body" name="body" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">作成</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <form id="new-thread" action="/new-thread" method="post">
-    <input type="text" name="title" placeholder="スレッドタイトル">
-    <input type="text" name="message" placeholder="投稿内容">
-    <input type="submit" value="新規スレッド作成">
-  </form>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-    // スレッド一覧を取得する
-    $.ajax({
-      url: "/threads",
-      type: "get",
-      success: function(data) {
-        for (var i = 0; i < data.length; i++) {
-          var thread = data[i];
-          var li = $("<li>");
-          li.append($("<a href='/thread/" + thread.id + "'>" + thread.title + "</a>"));
-          li.append($("<span class='last-post'>" + thread.last_post_at + "</span>"));
-          $(".threads").append(li);
-        }
-      }
-    });
-
-    // 新規スレッド作成
-    $("#new-thread").submit(function(event) {
-      event.preventDefault();
-      $.ajax({
-        url: $(this).attr("action"),
-        type: $(this).attr("method"),
-        data: $(this).serialize(),
-        success: function(data) {
-          // スレッドを追加する
-          var li = $("<li>");
-          li.append($("<a href='/thread/" + data.id + "'>" + data.title + "</a>"));
-          li.append($("<span class='last-post'>" + data.last_post_at + "</span>"));
-          $(".threads").append(li);
-        }
-      });
-    });
-  </script>
-
 </body>
 </html>

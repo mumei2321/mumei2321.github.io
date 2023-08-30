@@ -6,24 +6,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>GitHub掲示板</h1>
-    <h2>スレッド一覧</h2>
-    <ul class="threads">
-      <li>
-        <a href="#">
-          <span class="name">スレッド名</span>
-          <span class="timestamp">2023-08-30 17:14</span>
-          <span class="post-count">10</span>
-        </a>
+
+<div id="header">
+  <h1>GitHub掲示板</h1>
+</div>
+
+<div id="board">
+  <div id="thread">
+    <h2>スレッドタイトル</h2>
+    <ol class="posts">
+      <li class="post">
+        <span class="name">名無しさん</span>
+        <span class="date">2023-08-30 21:27</span>
+        <span class="body">
+          はじめまして。
+        </span>
       </li>
-    </ul>
-    <h2>投稿フォーム</h2>
-    <form action="/post" method="POST">
+    </ol>
+  </div>
+
+  <div id="post-form">
+    <form action="/post" method="post">
       <input type="text" name="name" placeholder="名前">
       <input type="text" name="body" placeholder="本文">
       <input type="submit" value="投稿">
     </form>
   </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>

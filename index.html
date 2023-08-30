@@ -64,23 +64,57 @@
     .incorrect {
       color: #ff0000;
     }
+
+    /* 追加するコード */
+    .content {
+      display: none; /* コンテンツを非表示にする */
+    }
   </style>
   </head>
 <body>
   <h1>-中学生のオンライン学習-</h1>
   <ul>
-    <li><a class="active">ホーム</a></li>
-    <li><a>国語</a></li>
-    <li><a>数学</a></li>
-    <li><a>英語</a></li>
-    <li><a>理科</a></li>
-    <li><a>社会</a></li>
-    <li><a>マイページ</a></li>
+    <li><a class="home">ホーム</a></li>
+    <li><a class="kokugo">国語</a></li>
+    <li><a class="sugaku">数学</a></li>
+    <li><a class="eigo">英語</a></li>
+    <li><a class="rika">理科</a></li>
+    <li><a class="syakai">社会</a></li>
+    <li><a class="mypage">マイページ</a></li>
   </ul>
-  <div class="content">
-    <p>このサイトは、中学生のための無料のオンライン学習サイトです。</p>
-    <p>あなたは、国語、数学、英語、理科、社会の５つの教科を選んで、その教科に関する基本的な知識や問題を学ぶことができます。</p>
-    <p>また、各教科には、クイズやテストを受けることができるボタンがあります。クイズやテストでは、正解や不正解や得点などのフィードバックが表示されます。</p>
-    <p>さらに、自分の学習状況や進度を確認できるマイページもあります。</p>
-    <p>それでは、あなたの好きな教科を選んで、楽しく学習しましょう！</p>
-  </div></body></html>
+  <script>
+    /* 追加するコード */
+    const ul = document.querySelector("ul");
+    const content = document.querySelector(".content");
+
+    ul.addEventListener("click", function(event) {
+      const target = event.target;
+
+      if (target.tagName === "A") {
+        content.classList.toggle("show");
+
+        if (target.classList.contains("kokugo")) {
+          content.innerHTML = "国語";
+        } else if (target.classlist.toggle("sugaku")) {
+          content.innerHTML = "数学";
+        } else if (target.classlist.toggle("eigo")) {
+          content.innerHTML = "英語";
+        } else if (target.classlist.toggle("rika")) {
+          content.innerHTML = "理科";
+        } else if (target.classlist.toggle("syakai")) {
+          content.innerHTML = "社会";
+        } else if (target.classlist.toggle("mypage")) {
+          content.innerHTML = "マイページ";
+        } else if (target.classlist.toggle("home")) {
+          content.innerHTML = `
+            このサイトは、中学生のための無料のオンライン学習サイトです。
+            あなたは、国語、数学、英語、理科、社会の５つの教科を選んで、その教科に関する基本的な知識や問題を学ぶことができます。
+            また、各教科には、クイズやテストを受けることができるボタンがあります。クイズやテストでは、正解や不正解や得点などのフィードバックが表示されます。
+            さらに、自分の学習状況や進度を確認できるマイページもあります。
+            それでは、あなたの好きな教科を選んで、楽しく学習しましょう！
+          `;
+        }
+      }
+    });
+  </script>
+</body></html>

@@ -1,55 +1,53 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>GitHub掲示板</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>GitHub 掲示板</title>
 </head>
 <body>
-  <div class="container">
-    <h1>GitHub掲示板</h1>
-    <hr>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <h2>スレッド一覧</h2>
-          </div>
-          <div class="card-body">
-            <ul class="list-group">
-              <li class="list-group-item">
-                <a href="#">スレッド1</a>
-              </li>
-              <li class="list-group-item">
-                <a href="#">スレッド2</a>
-              </li>
-              <li class="list-group-item">
-                <a href="#">スレッド3</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-header">
-            <h2>新規スレッド作成</h2>
-          </div>
-          <div class="card-body">
-            <form action="/create" method="post">
-              <div class="form-group">
-                <label for="title">タイトル</label>
-                <input type="text" class="form-control" id="title" name="title">
-              </div>
-              <div class="form-group">
-                <label for="body">本文</label>
-                <textarea class="form-control" id="body" name="body" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">作成</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+  <h1>GitHub 掲示板</h1>
+
+  <div class="thread">
+    <h2>スレッドタイトル</h2>
+    <p>スレッド本文</p>
+
+    <ol>
+      <li>
+        <span class="name">投稿者名</span>
+        <span class="time">投稿日時</span>
+        <p>投稿内容</p>
+      </li>
+      <li>
+        <span class="name">投稿者名</span>
+        <span class="time">投稿日時</span>
+        <p>投稿内容</p>
+      </li>
+    </ol>
+
+    <form action="#">
+      <input type="text" name="message" placeholder="返信">
+      <input type="submit" value="送信">
+    </form>
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      // 投稿フォームのsubmitイベントを処理する
+      $('form').submit(function(e) {
+        // 入力したメッセージを取得する
+        var message = $(this).find('input[name="message"]').val();
+
+        // 新しい投稿を追加する
+        $('.thread ol').append('<li><span class="name">' + $.cookie('name') + '</span><span class="time">' + new Date().toLocaleString() + '</span><p>' + message + '</p></li>');
+
+        // フォームの入力内容をクリアする
+        $(this).find('input[name="message"]').val('');
+
+        // イベントをキャンセルする
+        e.preventDefault();
+      });
+    });
+  </script>
 </body>
 </html>

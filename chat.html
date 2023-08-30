@@ -1,40 +1,126 @@
-<!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>GitHub掲示板</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <title>掲示板</title>
+  <style>
+    body {
+      font-family: "メイリオ", Meiryo, sans-serif;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #container {
+      width: 800px;
+      margin: 0 auto;
+    }
+    #form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    #name {
+      width: 200px;
+      height: 30px;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+    #message {
+      width: 500px;
+      height: 30px;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+    #submit {
+      width: 80px;
+      height: 40px;
+      border: none;
+      background-color: #333;
+      color: white;
+    }
+    #board {
+      width: 800px;
+      border-collapse: collapse;
+    }
+    #board th, #board td {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    #board th {
+      background-color: #eee;
+    }
+    #board td {
+      background-color: white;
+    }
+  </style>
 </head>
 <body>
-
-<div id="header">
-  <h1>GitHub掲示板</h1>
-</div>
-
-<div id="board">
-  <div id="thread">
-    <h2>スレッドタイトル</h2>
-    <ol class="posts">
-      <li class="post">
-        <span class="name">名無しさん</span>
-        <span class="date">2023-08-30 21:27</span>
-        <span class="body">
-          はじめまして。
-        </span>
-      </li>
-    </ol>
-  </div>
-
-  <div id="post-form">
-    <form action="/post" method="post">
-      <input type="text" name="name" placeholder="名前">
-      <input type="text" name="body" placeholder="本文">
-      <input type="submit" value="投稿">
+  <h1>掲示板</h1>
+  <div id="container">
+    <form id="form">
+      <input type="text" id="name" placeholder="名前">
+      <input type="text" id="message" placeholder="本文">
+      <button type="button" id="submit">投稿</button>
     </form>
+    <table id="board">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>本文</th>
+          <th>日時</th>
+        </tr>
+      </thead>
+      <tbody id="posts">
+        <!--ここに投稿内容が表示される-->
+      </tbody>
+    </table>
   </div>
-</div>
+  <script>
+    //投稿ボタンをクリックしたときの処理
+    document.getElementById("submit").onclick = function() {
+      //入力された名前と本文を取得
+      var name = document.getElementById("name").value;
+      var message = document.getElementById("message").value;
 
-<script src="script.js"></script>
+      //名前と本文が空でないかチェック
+      if (name == "" || message == "") {
+        alert("名前と本文を入力してください");
+        return;
+      }
 
+      //現在の日時を取得
+      var date = new Date();
+      
+       //日時を文字列に変換
+       var year = date.getFullYear();
+       var month = ("0" + (date.getMonth() + 1)).slice(-2);
+       var day = ("0" + date.getDate()).slice(-2);
+       var hour = ("0" + date.getHours()).slice(-2);
+       var minute = ("0" + date.getMinutes()).slice(-2);
+       var second = ("0" + date.getSeconds()).slice(-2);
+       var datetime = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
+
+       //投稿内容を表形式で作成
+       var post = document.createElement("tr");
+       var nameCell = document.createElement("td");
+       nameCell.textContent = name;
+       var messageCell = document.createElement("td");
+       messageCell.textContent = message;
+       var datetimeCell = document.createElement("td");
+       datetimeCell.textContent = datetime;
+
+       //投稿内容を表に追加
+       post.appendChild(nameCell);
+       post.appendChild(messageCell);
+       post.appendChild(datetimeCell);
+       document.getElementById("posts").appendChild(post);
+
+       //入力欄を空にする
+       document.getElementById("name").value = "";
+       document.getElementById("message").value = "";
+    };
+  </script>
 </body>
 </html>

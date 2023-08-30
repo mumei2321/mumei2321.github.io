@@ -2,52 +2,19 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>GitHub 掲示板</title>
+  <title>GitHub掲示板</title>
 </head>
 <body>
-  <h1>GitHub 掲示板</h1>
-
+  <h1>GitHub掲示板</h1>
   <div class="thread">
     <h2>スレッドタイトル</h2>
-    <p>スレッド本文</p>
-
-    <ol>
-      <li>
-        <span class="name">投稿者名</span>
-        <span class="time">投稿日時</span>
-        <p>投稿内容</p>
-      </li>
-      <li>
-        <span class="name">投稿者名</span>
-        <span class="time">投稿日時</span>
-        <p>投稿内容</p>
-      </li>
-    </ol>
-
-    <form action="#">
-      <input type="text" name="message" placeholder="返信">
-      <input type="submit" value="送信">
-    </form>
+    <div class="post">
+      <p>投稿者：投稿者名</p>
+      <p>投稿日時：2023-08-30 16:50:33 PST</p>
+      <p>投稿内容：
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec risus ac quam semper tristique. Sed et quam scelerisque, semper quam eget, faucibus mauris. Aenean sit amet quam lacus. Sed ultricies mauris vel augue semper, vel semper eros convallis.
+      </p>
+    </div>
   </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    $(function() {
-      // 投稿フォームのsubmitイベントを処理する
-      $('form').submit(function(e) {
-        // 入力したメッセージを取得する
-        var message = $(this).find('input[name="message"]').val();
-
-        // 新しい投稿を追加する
-        $('.thread ol').append('<li><span class="name">' + $.cookie('name') + '</span><span class="time">' + new Date().toLocaleString() + '</span><p>' + message + '</p></li>');
-
-        // フォームの入力内容をクリアする
-        $(this).find('input[name="message"]').val('');
-
-        // イベントをキャンセルする
-        e.preventDefault();
-      });
-    });
-  </script>
 </body>
 </html>

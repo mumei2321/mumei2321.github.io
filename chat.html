@@ -1,218 +1,135 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>掲示板</title>
+  <title>オンライン掲示板</title>
   <style>
     body {
-      font-family: "メイリオ", Meiryo, sans-serif;
-      background-color: #f0f0f0;
+      background-color: lightblue;
     }
     h1 {
       text-align: center;
-      color: #333;
     }
-    #container {
-      width: 800px;
-      margin: 0 auto;
-    }
-    #form {
+    form {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
     }
-    #name {
-      width: 200px;
-      height: 30px;
-      border: 1px solid #ccc;
-      padding: 5px;
+    input, textarea {
+      margin: 10px;
     }
-    #message {
-      width: 500px;
-      height: 30px;
-      border: 1px solid #ccc;
-      padding: 5px;
-    }
-    #submit {
-      width: 80px;
+    button {
+      width: 100px;
       height: 40px;
-      border: none;
-      background-color: #333;
-      color: white;
     }
-    #board {
-      width: 800px;
-      border-collapse: collapse;
+    ul {
+      list-style: none;
+      padding: 0;
     }
-    #board th, #board td {
-      border: 1px solid #ccc;
+    li {
+      border: 1px solid black;
+      margin: 10px;
       padding: 10px;
     }
-    #board th {
-      background-color: #eee;
-    }
-    #board td {
-      background-color: white;
+    span {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>掲示板</h1>
-  <div id="container">
-    <form id="form">
-      <input type="text" id="name" placeholder="名前">
-      <input type="text" id="message" placeholder="本文">
-      <button type="button" id="submit">投稿</button>
-    </form>
-    <table id="board">
-      <thead>
-        <tr>
-          <th>名前</th>
-          <th>本文</th>
-          <th>日時</th>
-        </tr>
-      </thead>
-      <tbody id="posts">
-        <!--ここに投稿内容が表示される-->
-      </tbody>
-    </table>
-  </div>
+  <h1 id="title">オンライン掲示板</h1>
+  <form id="settings">
+    <input type="text" id="board-title" placeholder="掲示板のタイトルを入力してください">
+    <input type="color" id="board-color" value="#ADD8E6">
+    <button type="submit">設定を変更</button>
+  </form>
+  <form id="post">
+    <input type="text" id="name" placeholder="名前を入力してください">
+    <textarea id="message" rows="5" cols="50" placeholder="メッセージを入力してください"></textarea>
+    <button type="submit">送信</button>
+  </form>
+  <ul id="messages"></ul>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
   <script>
-    //投稿ボタンをクリックしたときの処理
-    document.getElementById("submit").onclick = function() {
-      //入力された名前と本文を取得
-      var name = document.getElementById("name").value;
-      var message = document.getElementById("message").value;
+    // サーバーとの通信用のソケットを作成
+    const socket = io("https://online-board.herokuapp.com/");
 
-      //名前と本文が空でないかチェック
-      if (name == "" || message == "") {
-        alert("名前と本文を入力してください");
-        return;
+    // HTML要素を取得
+    const title = document.getElementById("title");
+    const boardTitle = document.getElementById("board-title");
+    const boardColor = document.getElementById("board-color");
+    const settings = document.getElementById("settings");
+    const name = document.getElementById("name");
+    const message = document.getElementById("message");
+    const post = document.getElementById("post");
+    const messages = document.getElementById("messages");
+
+    // 設定フォームが送信されたときの処理
+    settings.addEventListener("submit", (event) => {
+      // デフォルトの動作をキャンセル
+      event.preventDefault();
+      // サーバーに設定変更を通知
+      socket.emit("change settings", {
+        title: boardTitle.value,
+        color: boardColor.value
+      });
+      // 入力欄を空にする
+      boardTitle.value = "";
+      boardColor.value = "#ADD8E6";
+    });
+
+    // 投稿フォームが送信されたときの処理
+    post.addEventListener("submit", (event) => {
+      // デフォルトの動作をキャンセル
+      event.preventDefault();
+      // サーバーにメッセージ投稿を通知
+      socket.emit("post message", {
+        name: name.value,
+        message: message.value
+      });
+      // 入力欄を空にする
+      name.value = "";
+      message.value = "";
+    });
+
+    // サーバーから設定変更が通知されたときの処理
+    socket.on("change settings", (data) => {
+      // 掲示板のタイトルと背景色を変更する
+      title.textContent = data.title;
+      document.body.style.backgroundColor = data.color;
+    });
+
+    // サーバーからメッセージ投稿が通知されたときの処理
+    socket.on("post message", (data) => {
+      // メッセージを表示するための要素を作成
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      const p = document.createElement("p");
+      const button = document.createElement("button");
+      // 要素にデータをセット
+      span.textContent = data.name + " (" + data.date + ")";
+      p.textContent = data.message;
+      button.textContent = "削除";
+      // ボタンがクリックされたときの処理
+      button.addEventListener("click", () => {
+        // サーバーにメッセージ削除を通知
+        socket.emit("delete message", data.id);
+      });
+      // 要素を組み合わせてリストに追加
+      li.appendChild(span);
+      li.appendChild(p);
+      li.appendChild(button);
+      messages.appendChild(li);
+    });
+
+    // サーバーからメッセージ削除が通知されたときの処理
+    socket.on("delete message", (id) => {
+      // メッセージの要素を探す
+      const li = messages.querySelector(`li[data-id="${id}"]`);
+      // メッセージの要素があればリストから削除
+      if (li) {
+        messages.removeChild(li);
       }
-
-      //現在の日時を取得
-      var date = new Date();
-      
-       //日時を文字列に変換
-       var year = date.getFullYear();
-       var month = ("0" + (date.getMonth() + 1)).slice(-2);
-       var day = ("0" + date.getDate()).slice(-2);
-       var hour = ("0" + date.getHours()).slice(-2);
-       var minute = ("0" + date.getMinutes()).slice(-2);
-       var second = ("0" + date.getSeconds()).slice(-2);
-       var datetime = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
-
-       //投稿内容を表形式で作成
-       var post = document.createElement("tr");
-       var nameCell = document.createElement("td");
-       nameCell.textContent = name;
-       var messageCell = document.createElement("td");
-       messageCell.textContent = message;
-       var datetimeCell = document.createElement("td");
-       datetimeCell.textContent = datetime;
-
-       //投稿内容を表に追加
-       post.appendChild(nameCell);
-       post.appendChild(messageCell);
-       post.appendChild(datetimeCell);
-       document.getElementById("posts").appendChild(post);
-
-       //入力欄を空にする
-       document.getElementById("name").value = "";
-       document.getElementById("message").value = "";
-    };
-    //投稿ボタンをクリックしたときの処理
-    document.getElementById("submit").onclick = function() {
-      //入力された名前と本文を取得
-      var name = document.getElementById("name").value;
-      var message = document.getElementById("message").value;
-
-      //名前と本文が空でないかチェック
-      if (name == "" || message == "") {
-        alert("名前と本文を入力してください");
-        return;
-      }
-
-      //現在の日時を取得
-      var date = new Date();
-
-      //日時を文字列に変換
-      var year = date.getFullYear();
-      var month = ("0" + (date.getMonth() + 1)).slice(-2);
-      var day = ("0" + date.getDate()).slice(-2);
-      var hour = ("0" + date.getHours()).slice(-2);
-      var minute = ("0" + date.getMinutes()).slice(-2);
-      var second = ("0" + date.getSeconds()).slice(-2);
-      var datetime = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
-
-      //投稿内容を表形式で作成
-      var post = document.createElement("tr");
-      var nameCell = document.createElement("td");
-      nameCell.textContent = name;
-      var messageCell = document.createElement("td");
-      messageCell.textContent = message;
-      var datetimeCell = document.createElement("td");
-      datetimeCell.textContent = datetime;
-
-      //投稿内容を表に追加
-      post.appendChild(nameCell);
-      post.appendChild(messageCell);
-      post.appendChild(datetimeCell);
-      document.getElementById("posts").appendChild(post);
-
-      //入力欄を空にする
-      document.getElementById("name").value = "";
-      document.getElementById("message").value = "";
-
-      //投稿内容を保存
-      savePost(name, message, datetime);
-    };
-
-    //投稿内容を保存する関数
-    function savePost(name, message, datetime) {
-      //ファイル名を生成
-      var filename = datetime + ".txt";
-
-      //ファイルの書き込み準備
-      var fs = require("fs");
-      var wstream = fs.createWriteStream(filename, { encoding: "utf-8" });
-
-      //投稿内容を書き込む
-      wstream.write(name + "," + message + "\n");
-
-      //ファイルの書き込みを完了
-      wstream.end();
-    }
-//ファイルの削除処理
-function deleteOldPosts() {
-  //現在の日時を取得
-  var date = new Date();
-
-  //3ヶ月前の日時を取得
-  var threeMonthsAgo = new Date(date.getFullYear(), date.getMonth() - 3, date.getDate());
-
-  //3ヶ月前の日時以前のファイルを削除
-  var fs = require("fs");
-  fs.readdir(".", function(err, files) {
-    if (err) {
-      return console.log(err);
-    }
-
-    for (var i = 0; i < files.length; i++) {
-      var filename = files[i];
-      var dateStr = filename.substring(0, 10);
-      var datetime = new Date(dateStr);
-
-      if (datetime < threeMonthsAgo) {
-        fs.unlink(filename, function(err) {
-          if (err) {
-            return console.log(err);
-          }
-        });
-      }
-    }
-  });
-}
+    });
   </script>
 </body>
 </html>

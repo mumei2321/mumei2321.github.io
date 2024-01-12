@@ -1,0 +1,24 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>匿名掲示板</title>
+</head>
+<body>
+    <h1>匿名掲示板</h1>
+    <form action="/post" method="POST">
+        <textarea name="content" rows="5" cols="50" placeholder="ここに書き込んでください"></textarea>
+        <br>
+        <input type="submit" value="投稿">
+    </form>
+    <hr>
+    {% for post in posts %}
+    <div>
+        <p>{{ post.content }}</p>
+        <small>{{ post.timestamp.strftime('%Y/%m/%d %H:%M:%S') }}</small>
+    </div>
+    <hr>
+    {% endfor %}
+</body>
+</html>

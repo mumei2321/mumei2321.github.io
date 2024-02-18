@@ -1,28 +1,41 @@
-<!DOCTYPE html>
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<meta name="viewport" content="width=device-width, initial-scale=0.6">
-<base href="http://viper.2ch.sc/news4vip/">
-<title>2ch.netを復活させようぜwその6</title>
-<script type="text/javascript" src="http://www.2ch.sc/js/index.js" defer></script>
-<script type="text/javascript" src="http://www.2ch.sc/js/be.js" defer></script>
-</head>
-<body bgcolor=#efefef text=black link=blue alink=red vlink=#660099>
-<div style="margin-top:1em;"><span style='float:left;'>
-<a href="http://2ch.sc/">２ちゃんねる</a>
-<a href="http://sp.2ch.sc/test/read.cgi/news4vip/1703845744" target="_blank">スマホ用</a>
-<a href="./">■掲示板に戻る■</a>
- <a href="../test/read.cgi/news4vip/1703845744/">全部</a>
- <a href="../test/read.cgi/news4vip/1703845744/-100">1-</a>
- <a href="../test/read.cgi/news4vip/1703845744/l50">最新50</a>
+<html lang="ja"><head>
+<meta charset="Shift_JIS">
+<meta http-equiv="Content-Script-Type" content="application/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="referrer" content="same-origin">
+<meta name="viewport" content="initial-scale=1">
+<title>[スレタイ]</title>
+<script type="text/javascript" src="//2ch.sc/js/index.js" defer="defer" crossorigin=""></script>
+<script type="text/javascript" src="//2ch.sc/js/read.js" defer="defer" crossorigin=""></script>
+<link rel="stylesheet" type="text/css" href="./sc.css">
+<script type="application/javascript" src="//anymind360.com/js/11486/ats.js"></script>
+<style></style><script type="text/javascript" src="https://cozmo.github.io/jsQR/jsQR.js" crossorigin=""></script><script type="text/javascript" src="//2ch.sc/js/qrcode.js" crossorigin=""></script><style id="netCSS"></style><style id="netCSSv"></style></head><body style="margin-top: 27px;"><script type="text/javascript" src="//2ch.sc/js/be.js" crossorigin=""></script>
+
+<div id="header">
+    <a href="http://2ch.sc/"><img src="about:blank" alt="２ちゃんねるの掟とは？" title="２ちゃんねるの掟とは？"></a>
+</div>
+
+<div><span style="float:left;">
+    <a href="http://2ch.sc/">２ちゃんねる</a>
+    <a href="https://viper.2ch.sc/test/../news4vip/">■掲示板に戻る■</a>
+    <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/">全部</a>
+    <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/-100">1-</a><span id="chunkedLinks"> <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/101-200">101-</a> <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/201-300">201-</a> <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/301-400">301-</a> <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/401-500">401-</a></span>
+    <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/l50">最新50</a> <small>(Alt+Click: クイックモード)</small>
 </span>
-<span style='float:right;'>
-&nbsp;
-</span>&nbsp;</div>
-<hr style="background-color:#888;color:#888;border-width:0;height:1px;position:relative;top:-.4em;">
-<h1 style="color:red;font-size:larger;font-weight:normal;margin:-.5em 0 0;">2ch.netを復活させようぜwその6</h1>
-<dl class="thread" style="word-break:break-all;">
-  <dt>[アンカー] ：<a href="mailto:[メール（文字列）]"><b>[名前]</b>◆[トリップ]<b></b></a>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒] ID:[9桁のID]<dd>[書き込み内容]<br><br>
+<!-- <span style="float:right;" id="ad">
+    [PR]<a href="http://info.2ch.sc/guide/">２ちゃんねるガイド</a>[PR]
+</span> -->
+<span style="float:right;">
+</span>
+</div>
+<div id="alertMsg"></div>
+<hr>
+
+<h1 id="title">[スレタイ]</h1>
+
+<form action="javascript:void 0;" style="margin: 0px;"><div style="text-align: right;"><a href="http://be.2ch.sc/" target="_blank">be</a>チェック<input type="button" value="2BP" style="border-color: aliceblue; background-color: aliceblue; color: teal; border-style: inset; font-weight: bold;"><input type="button" value="BRZ" style="border-color: chocolate; background-color: chocolate;"><input type="button" value="PLT" style="border-color: darkslateblue; background-color: darkslateblue; color: khaki;"><input type="button" value="DIA" style="border-color: brown; background-color: brown; color: khaki;"><input type="button" value="S★" style="border-color: gold; background-color: gold; color: red;"><input type="button" value=".sc のみ" style="border-color: dimgray; background-color: dimgray; display: none; color: deepskyblue;"></div></form>
+ <dl id="thread" style="margin-top: 0px;">
+   <dt>[アンカー] ：<a href="mailto:[メール（文字列）]"><b>[名前]</b>◆[トリップ]<b></b></a>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒] ID:[9桁のID]<dd>[書き込み内容]<br><br>
   <dt>[アンカー] ：<a href="mailto:[メール（文字列）]"><b></b>◆[トリップ]<b></b></a>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒] ID:[9桁のID]<dd>[書き込み内容]<br><br>
   <dt>[アンカー] ：<a href="mailto:[メール（文字列）]"><b>[名前]</b></a>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒] ID:[9桁のID]<dd>[書き込み内容]<br><br>
   <dt>[アンカー] ：<font color=green><b>[名前]</b>◆[トリップ]<b></b></font>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒] ID:[9桁のID]<dd>[書き込み内容]<br><br>
@@ -31,34 +44,32 @@
   <dt>[アンカー] ：<a href="mailto:[メール（文字列）]"><b></b>◆[トリップ]<b></b></a>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒]<dd>[書き込み内容]<br><br>
   <dt>[アンカー] ：<a href="mailto:[メール（文字列）]"><b>[名前]</b></a>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒]<dd>[書き込み内容]<br><br>
   <dt>[アンカー] ：<font color=green><b></b>◆[トリップ]<b></b></font>：[年]/[月]/[日](曜日) [時]:[分]:[秒].[ミリ秒] ID:[9桁のID]<dd>[書き込み内容]<br><br>
-</dl>
+ </dl>
 
- <font color=red face="Arial"><b>141 KB</b></font>
+<div>
 <hr>
-<center><a href="../test/read.cgi/news4vip/1703845744/776n-">新着レスの表示</a></center>
-<hr>
-<a href="./">掲示板に戻る</a>
- <a href="../test/read.cgi/news4vip/1703845744/">全部</a>
- <a href="../test/read.cgi/news4vip/1703845744/1-1">前100</a>
- <a href="../test/read.cgi/news4vip/1703845744/776-776">次100</a>
- <a href="../test/read.cgi/news4vip/1703845744/l50">最新50</a>
-<form method=POST action="../test/bbs.cgi?guid=ON">
-<input type=submit value="書き込む" name=submit>
- 名前： <input name=FROM size=19>
- E-mail<font size=1> (省略可) </font>: <input name=mail size=19><br>
-<textarea rows=5 cols=70 wrap=off name=MESSAGE></textarea>
-<input type=hidden name=bbs value=news4vip>
-<input type=hidden name=key value=1703845744>
-<input type=hidden name=time value=1707056639>
-</form>
-<br><div style="float:left;">read.cgi ver 2014.07.20.01.SC 2014/07/20 <font color=green><strong>D ★</strong></font></div>
-<div style="float:right;"><form method=GET name=f action="http://find.2ch.sc/" style="margin:0px"><input size=25 name=STR value="" class="form_input"><select name="TYPE" class="form_select"><option value="BODY">本文</option><option value="TITLE" selected>スレッドタイトル</option><option value="POSTERS">投稿者</option></select><input type="image" src="http://www.2ch.sc/img/search_button.gif" alt="検索" class="form_button" style="margin-bottom:-4px;"><br /><input type=hidden name=BBS value=ALL><input type=hidden name=ENCODING value=SJIS><input type=hidden name=COUNT value=50></form></div>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-49733086-1', '2ch.sc');
-  ga('send', 'pageview');
-</script>
-</body></html>
+<small style="float:right;">
+<span id="datSize">95kB</span><small style="color: gray;">(0.971sec.)</small> <a href="http://info.2ch.sc/wiki/?read.html" title="read.html - いきいき Wiki">解説</a>
+</small>
+<span style="float: left;"><span style="text-decoration: underline;">　⇒</span><ins id="recommended" style="background-color: lavender; border: 1px outset lavender; color: black; display: none; opacity: 0.95; padding: 0.5em; position: absolute; text-decoration: none; white-space: nowrap;"></ins></span><div id="newResLink" style="margin-top: -1em;"><span><a href="javascript:void 0;">リロード[Ctrl+R]</a>
+    <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/409n-">新着レスの表示</a>
+    / </span><small><a href="javascript:void 0;">スレッド保存</a></small>
+    <hr style="clear:right;"></div>
+<a href="https://viper.2ch.sc/test/../news4vip/">掲示板に戻る</a>
+<a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/">全部</a>
+<a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/260-359">前100</a>
+<a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/410-509">次100</a>
+<a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/l50">最新50</a> <small>(Alt+Click: クイックモード)</small></div>
+
+<form id="postForm" action="javascript:void 0;"><div>
+<input type="submit" name="submit" value="書き込む">
+<label>名前：<input name="FROM" size="19"></label>
+<label>E-mail<small style="font-size:xx-small;">(省略可)</small>：<input name="mail" size="19"></label><br>
+<textarea name="MESSAGE" cols="70" rows="5"></textarea>
+<input type="hidden" name="bbs" value="news4vip">
+<input type="hidden" name="key" value="1707485877">
+<input type="hidden" name="time" value="1708177374">
+<br><label><input type="checkbox" value="sans-serif">AAモード</label>&nbsp; <label><input type="checkbox" id="isFixedForm">入力フォーム位置固定</label>&nbsp; <input type="button" value="🎙音声入力">&nbsp; <input type="button" value="🔡QR入力"></div></form>
+
+
+<form action="//find.2ch.sc/" target="_blank"><div style="position: fixed; right: 0px; top: 0px; background-color: lavender; border: 1px outset lavender; text-align: right;"><span id="toggleIdNum" title="ID レス数表示切替" tabindex="0" style="background-color: dimgray; border: 2px outset dimgray; cursor: default; font-size: 0.75em; color: palegreen;">ID</span><span title="read.cgi モード切替" tabindex="0" style="background-color: dimgray; border: 2px outset dimgray; color: palegreen; cursor: default; font-size: 0.75em; margin-right: 1px;">◎</span><input name="STR" size="20" placeholder="検索語"><label><input type="checkbox" value="news4vip">この板のみ</label><select name="TYPE"><option value="TITLE" style="line-height: 1.2;">スレッドタイトル</option><option value="POSTERS" style="line-height: 1.2;">投稿者</option><option value="BODY" style="line-height: 1.2;">本文</option></select><input type="hidden" name="COUNT" value="50"><input type="hidden" name="ENCODING" value="SJIS"><span><input type="submit" value="検 索" style="border-color: cornflowerblue; background-color: cornflowerblue; color: white;"><ins style="background-color: lavender; border: 1px outset lavender; color: black; display: none; margin-top: 1.4em; padding: 0.5em; position: absolute; right: 0px; text-align: left; text-decoration: none; white-space: nowrap; border-radius: 8px; opacity: 0.95;"><ul style="margin:0;"><li><a href="//find.2ch.sc/" target="_blank">２ちゃんねる検索</a>による検索</li><li>レス抽出とは書式が異なります (<a href="https://find.moritapo.jp/faq/faq.php" target="_blank">ヘルプ</a>参照)</li></ul></ins></span><span><input type="button" value="レス抽出" style="border-color: darkslategray; background-color: darkslategray; color: gold;"><ins style="background-color: lavender; border: 1px outset lavender; color: black; display: none; margin-top: 1.4em; padding: 0.5em; position: absolute; right: 0px; text-align: left; text-decoration: none; white-space: nowrap; border-radius: 8px; opacity: 0.95;"><dl style="margin:0;"><dt style="font-weight:bold;">書式</dt><dd>[!][0123:]正規表現</dd><dt style="font-weight:bold;">!</dt><dd>正規表現に一致しないレスを抽出 (NG機能)</dd><dd>この指定が無ければ一致するレスを抽出</dd><dt style="font-weight:bold;">0123:</dt><dd>一致対象: 0=名前, 1=メール, 2=日付・ID等, 3=本文</dd><dd>この指定が無ければ全フィールドが対象</dd><dt style="font-weight:bold;">正規表現</dt><dd>レスを抽出するための正規表現</dd><dd>適合するレスが無ければ &gt;&gt;1 のみ表示</dd><dd>空欄なら初期状態に戻る</dd></dl></ins></span></div></form><address style="color: dimgray; text-align: right;"><a href="http://sunos.saita.ma/2ch-cgi-lw.html" target="_blank" style="color: dimgray;">read.js</a> 2014-12-31</address></body></html>

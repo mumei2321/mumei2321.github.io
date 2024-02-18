@@ -1,0 +1,186 @@
+body {
+    background-color: #EFEFEF;
+    color: black;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    overscroll-behavior-y: contain;
+}
+
+#header {
+    margin-bottom: 1em;
+}
+
+#header img {
+    width: 400px;
+    height: 15px;
+    border-width: 0;
+    max-width: 98%;
+}
+
+#alertMsg {
+    clear: both;
+    margin: 1px;
+    padding: 1px;
+}
+
+#alertMsg+hr {
+    background-color: #888;
+    color: #888;
+    border-width: 0;
+    height: 1px;
+    position: relative;
+    top: -.4em;
+}
+
+#title {
+    color: red;
+    font-size: larger;
+    font-weight: normal;
+    margin: -.5em 0 0;
+}
+
+dt span {
+    color: green;
+}
+
+dt span.id {
+    color: black;
+}
+
+dd {
+    margin-bottom: 1em;
+}
+
+#datSize {
+    color: red;
+    font-family: "Arial";
+    font-weight: bold;
+    padding: 2px;
+}
+
+#newResLink {
+    text-align: center;
+}
+
+textarea {
+    white-space: pre;
+    /* for browsers that don't support vw */
+    max-width: 98%;
+    max-width: 95vw;
+}
+
+#postForm div {
+    margin-top: 1em;
+}
+
+dd:not(:hover)>input[type="button"] {
+    visibility: hidden;
+}
+
+@media (pointer: coarse), /* deprecated */ screen and (max-device-width: 640px) {
+    html {
+        font-size: 60%;
+    }
+
+    input, select, textarea {
+        font-size: inherit;
+    }
+
+    input[type="checkbox"] {
+        height: 1em;
+        margin: 0;
+    }
+
+    dt {
+        border-top: 1px solid silver;
+        border-bottom: 1px dotted silver;
+        background-color: rgba(0,0,0,.05);
+    }
+
+    dd {
+        margin: 0;
+        font-size: 125%;
+    }
+
+    dd>span>ins>dl {
+        font-size: 80%;
+    }
+
+    :not(dt)>a {
+        color: black;
+        background-color: rgba(0,0,0,.1);
+        border: 1px solid;
+        border-radius: 1em;
+        margin: .25em 0;
+        padding: .25em;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    dd>a:link {
+        border-color: blue;
+        background-color: lightskyblue;
+    }
+
+    dd>a:visited {
+        border-color: purple;
+        background-color: thistle;
+    }
+
+    :not(dt)>a:active {
+        border-color: red;
+        background-color: pink;
+    }
+
+    #header>a {
+        background-color: transparent;
+        border-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline;
+    }
+
+    #postForm input:not([type="checkbox"]):not([type="button"]) {
+        width: 35vw;
+    }
+
+    #postForm input[type="submit"] {
+        float: left;
+        padding: 1em;
+    }
+
+    #postForm label:nth-of-type(-n+2) {
+        float: right;
+        width: 60vw;
+        text-align: right;
+    }
+
+    #postForm textarea {
+        clear: both;
+        width: 95vw;
+        font-size: 125%;
+    }
+}
+
+@media (hover: none) {
+    [title][tabindex] {
+        position: relative;
+    }
+
+    [title][tabindex]:focus::after {
+        content: attr(title);
+        position: absolute;
+        left: 0;
+        top: 1.5em;
+        color: black;
+        background-color: white;
+        border: 1px solid;
+        opacity: .95;
+        font-size: 1rem;
+        white-space: nowrap;
+    }
+
+    ins, form[target]>div {
+        z-index: 1;
+    }
+}

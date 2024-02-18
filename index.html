@@ -1,11 +1,11 @@
 <html lang="ja">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="Shift_JIS">
         <meta http-equiv="Content-Script-Type" content="application/javascript">
         <meta http-equiv="Content-Style-Type" content="text/css">
         <meta name="referrer" content="same-origin">
         <meta name="viewport" content="initial-scale=1">
-        <title>[ã‚¹ãƒ¬ã‚¿ã‚¤]</title>
+        <title>[ƒXƒŒƒ^ƒC]</title>
         <script type="text/javascript" src="https://2ch.sc/js/index.js" defer="defer" crossorigin=""></script>
         <script type="text/javascript" src="https://2ch.sc/js/read.js" defer="defer" crossorigin=""></script>
         <link rel="stylesheet" type="text/css" href="./sc.css">
@@ -20,14 +20,14 @@
         <script type="text/javascript" src="//2ch.sc/js/be.js" crossorigin=""></script>
         <div id="header">
             <a href="http://2ch.sc/">
-                <img src="about:blank" alt="ï¼’ã¡ã‚ƒã‚“ã­ã‚‹ã®æŽŸã¨ã¯ï¼Ÿ" title="ï¼’ã¡ã‚ƒã‚“ã­ã‚‹ã®æŽŸã¨ã¯ï¼Ÿ">
+                <img src="about:blank" alt="‚Q‚¿‚á‚ñ‚Ë‚é‚Ì|‚Æ‚ÍH" title="‚Q‚¿‚á‚ñ‚Ë‚é‚Ì|‚Æ‚ÍH">
             </a>
         </div>
         <div>
             <span style="float:left;">
-                <a href="http://2ch.sc/">ï¼’ã¡ã‚ƒã‚“ã­ã‚‹</a>
-                <a href="https://viper.2ch.sc/test/../news4vip/">â– æŽ²ç¤ºæ¿ã«æˆ»ã‚‹â– </a>
-                <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/">å…¨éƒ¨</a>
+                <a href="http://2ch.sc/">‚Q‚¿‚á‚ñ‚Ë‚é</a>
+                <a href="https://viper.2ch.sc/test/../news4vip/">¡ŒfŽ¦”Â‚É–ß‚é¡</a>
+                <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/">‘S•”</a>
                 <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/-100">1-</a>
                 <span id="chunkedLinks">
                     <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/101-200">101-</a>
@@ -35,115 +35,115 @@
                     <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/301-400">301-</a>
                     <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/401-500">401-</a>
                 </span>
-                <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/l50">æœ€æ–°50</a>
-                <small>(Alt+Click: ã‚¯ã‚¤ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰)</small>
+                <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/l50">ÅV50</a>
+                <small>(Alt+Click: ƒNƒCƒbƒNƒ‚[ƒh)</small>
             </span>
             <!-- <span style="float:right;" id="ad">
-    [PR]<a href="http://info.2ch.sc/guide/">ï¼’ã¡ã‚ƒã‚“ã­ã‚‹ã‚¬ã‚¤ãƒ‰</a>[PR]
+    [PR]<a href="http://info.2ch.sc/guide/">‚Q‚¿‚á‚ñ‚Ë‚éƒKƒCƒh</a>[PR]
 </span> -->
             <span style="float:right;"></span>
         </div>
         <div id="alertMsg"></div>
         <hr>
-        <h1 id="title">[ã‚¹ãƒ¬ã‚¿ã‚¤]</h1>
+        <h1 id="title">[ƒXƒŒƒ^ƒC]</h1>
         <form action="javascript:void 0;" style="margin: 0px;">
             <div style="text-align: right;">
                 <a href="http://be.2ch.sc/" target="_blank">be</a>
-                ãƒã‚§ãƒƒã‚¯<input type="button" value="2BP" style="border-color: aliceblue; background-color: aliceblue; color: teal; border-style: inset; font-weight: bold;">
+                ƒ`ƒFƒbƒN<input type="button" value="2BP" style="border-color: aliceblue; background-color: aliceblue; color: teal; border-style: inset; font-weight: bold;">
                 <input type="button" value="BRZ" style="border-color: chocolate; background-color: chocolate;">
                 <input type="button" value="PLT" style="border-color: darkslateblue; background-color: darkslateblue; color: khaki;">
                 <input type="button" value="DIA" style="border-color: brown; background-color: brown; color: khaki;">
-                <input type="button" value="Sâ˜…" style="border-color: gold; background-color: gold; color: red;">
-                <input type="button" value=".sc ã®ã¿" style="border-color: dimgray; background-color: dimgray; display: none; color: deepskyblue;">
+                <input type="button" value="Sš" style="border-color: gold; background-color: gold; color: red;">
+                <input type="button" value=".sc ‚Ì‚Ý" style="border-color: dimgray; background-color: dimgray; display: none; color: deepskyblue;">
             </div>
         </form>
         <dl id="thread" style="margin-top: 0px;">
             <dt>
-                [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
-                <a href="mailto:[ãƒ¡ãƒ¼ãƒ«ï¼ˆæ–‡å­—åˆ—ï¼‰]">
-                    <b>[åå‰]</b>
-                    â—†[ãƒˆãƒªãƒƒãƒ—]<b></b>
+                [ƒAƒ“ƒJ[] F
+                <a href="mailto:[ƒ[ƒ‹i•¶Žš—ñj]">
+                    <b>[–¼‘O]</b>
+                    Ÿ[ƒgƒŠƒbƒv]<b></b>
                 </a>
-                ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’] ID:[ID]
+                F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b] ID:[ID]
             <dd>
-                [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                [‘‚«ž‚Ý“à—e]<br>
                 <br>
                 <dt>
-                    [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
-                    <a href="mailto:[ãƒ¡ãƒ¼ãƒ«ï¼ˆæ–‡å­—åˆ—ï¼‰]">
+                    [ƒAƒ“ƒJ[] F
+                    <a href="mailto:[ƒ[ƒ‹i•¶Žš—ñj]">
                         <b></b>
-                        â—†[ãƒˆãƒªãƒƒãƒ—]<b></b>
+                        Ÿ[ƒgƒŠƒbƒv]<b></b>
                     </a>
-                    ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’] ID:[ID]
+                    F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b] ID:[ID]
                 <dd>
-                    [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                    [‘‚«ž‚Ý“à—e]<br>
                     <br>
                     <dt>
-                        [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
-                        <a href="mailto:[ãƒ¡ãƒ¼ãƒ«ï¼ˆæ–‡å­—åˆ—ï¼‰]">
-                            <b>[åå‰]</b>
+                        [ƒAƒ“ƒJ[] F
+                        <a href="mailto:[ƒ[ƒ‹i•¶Žš—ñj]">
+                            <b>[–¼‘O]</b>
                         </a>
-                        ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’] ID:[ID]
+                        F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b] ID:[ID]
                     <dd>
-                        [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                        [‘‚«ž‚Ý“à—e]<br>
                         <br>
                         <dt>
-                            [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
+                            [ƒAƒ“ƒJ[] F
                             <font color=green>
-                                <b>[åå‰]</b>
-                                â—†[ãƒˆãƒªãƒƒãƒ—]<b></b>
+                                <b>[–¼‘O]</b>
+                                Ÿ[ƒgƒŠƒbƒv]<b></b>
                             </font>
-                            ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’] ID:[ID]
+                            F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b] ID:[ID]
                         <dd>
-                            [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                            [‘‚«ž‚Ý“à—e]<br>
                             <br>
                             <dt>
-                                [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
-                                <a href="mailto:[ãƒ¡ãƒ¼ãƒ«ï¼ˆæ–‡å­—åˆ—ï¼‰]">
-                                    <b>[åå‰]</b>
-                                    â—†[ãƒˆãƒªãƒƒãƒ—]<b></b>
+                                [ƒAƒ“ƒJ[] F
+                                <a href="mailto:[ƒ[ƒ‹i•¶Žš—ñj]">
+                                    <b>[–¼‘O]</b>
+                                    Ÿ[ƒgƒŠƒbƒv]<b></b>
                                 </a>
-                                ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’]
+                                F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b]
                             <dd>
-                                [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                                [‘‚«ž‚Ý“à—e]<br>
                                 <br>
                                 <dt>
-                                    [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
+                                    [ƒAƒ“ƒJ[] F
                                     <font color=green>
-                                        <b>[åå‰]</b>
+                                        <b>[–¼‘O]</b>
                                     </font>
-                                    ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’] ID:[ID]
+                                    F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b] ID:[ID]
                                 <dd>
-                                    [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                                    [‘‚«ž‚Ý“à—e]<br>
                                     <br>
                                     <dt>
-                                        [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
-                                        <a href="mailto:[ãƒ¡ãƒ¼ãƒ«ï¼ˆæ–‡å­—åˆ—ï¼‰]">
+                                        [ƒAƒ“ƒJ[] F
+                                        <a href="mailto:[ƒ[ƒ‹i•¶Žš—ñj]">
                                             <b></b>
-                                            â—†[ãƒˆãƒªãƒƒãƒ—]<b></b>
+                                            Ÿ[ƒgƒŠƒbƒv]<b></b>
                                         </a>
-                                        ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’]
+                                        F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b]
                                     <dd>
-                                        [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                                        [‘‚«ž‚Ý“à—e]<br>
                                         <br>
                                         <dt>
-                                            [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
-                                            <a href="mailto:[ãƒ¡ãƒ¼ãƒ«ï¼ˆæ–‡å­—åˆ—ï¼‰]">
-                                                <b>[åå‰]</b>
+                                            [ƒAƒ“ƒJ[] F
+                                            <a href="mailto:[ƒ[ƒ‹i•¶Žš—ñj]">
+                                                <b>[–¼‘O]</b>
                                             </a>
-                                            ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’]
+                                            F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b]
                                         <dd>
-                                            [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                                            [‘‚«ž‚Ý“à—e]<br>
                                             <br>
                                             <dt>
-                                                [ã‚¢ãƒ³ã‚«ãƒ¼] ï¼š
+                                                [ƒAƒ“ƒJ[] F
                                                 <font color=green>
                                                     <b></b>
-                                                    â—†[ãƒˆãƒªãƒƒãƒ—]<b></b>
+                                                    Ÿ[ƒgƒŠƒbƒv]<b></b>
                                                 </font>
-                                                ï¼š[å¹´]/[æœˆ]/[æ—¥](æ›œæ—¥) [æ™‚]:[åˆ†]:[ç§’].[ãƒŸãƒªç§’] ID:[ID]
+                                                F[”N]/[ŒŽ]/[“ú](—j“ú) [Žž]:[•ª]:[•b].[ƒ~ƒŠ•b] ID:[ID]
                                             <dd>
-                                                [æ›¸ãè¾¼ã¿å†…å®¹]<br>
+                                                [‘‚«ž‚Ý“à—e]<br>
                                                 <br>
         </dl>
         <div>
@@ -151,39 +151,39 @@
             <small style="float:right;">
                 <span id="datSize">95kB</span>
                 <small style="color: gray;">(0.971sec.)</small>
-                <a href="http://info.2ch.sc/wiki/?read.html" title="read.html - ã„ãã„ã Wiki">è§£èª¬</a>
+                <a href="http://info.2ch.sc/wiki/?read.html" title="read.html - ‚¢‚«‚¢‚« Wiki">‰ðà</a>
             </small>
             <span style="float: left;">
-                <span style="text-decoration: underline;">â‡’</span>
+                <span style="text-decoration: underline;">Ë</span>
                 <ins id="recommended" style="background-color: lavender; border: 1px outset lavender; color: black; display: none; opacity: 0.95; padding: 0.5em; position: absolute; text-decoration: none; white-space: nowrap;"></ins>
             </span>
             <div id="newResLink" style="margin-top: -1em;">
                 <span>
-                    <a href="javascript:void 0;">ãƒªãƒ­ãƒ¼ãƒ‰[Ctrl+R]</a>
-                    <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/409n-">æ–°ç€ãƒ¬ã‚¹ã®è¡¨ç¤º</a>
+                    <a href="javascript:void 0;">ƒŠƒ[ƒh[Ctrl+R]</a>
+                    <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/409n-">V’…ƒŒƒX‚Ì•\Ž¦</a>
                     / 
                 </span>
                 <small>
-                    <a href="javascript:void 0;">ã‚¹ãƒ¬ãƒƒãƒ‰ä¿å­˜</a>
+                    <a href="javascript:void 0;">ƒXƒŒƒbƒh•Û‘¶</a>
                 </small>
                 <hr style="clear:right;">
             </div>
-            <a href="https://viper.2ch.sc/test/../news4vip/">æŽ²ç¤ºæ¿ã«æˆ»ã‚‹</a>
-            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/">å…¨éƒ¨</a>
-            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/260-359">å‰100</a>
-            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/410-509">æ¬¡100</a>
-            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/l50">æœ€æ–°50</a>
-            <small>(Alt+Click: ã‚¯ã‚¤ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰)</small>
+            <a href="https://viper.2ch.sc/test/../news4vip/">ŒfŽ¦”Â‚É–ß‚é</a>
+            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/">‘S•”</a>
+            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/260-359">‘O100</a>
+            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/410-509">ŽŸ100</a>
+            <a href="https://viper.2ch.sc/test/read.cgi/news4vip/1707485877/l50">ÅV50</a>
+            <small>(Alt+Click: ƒNƒCƒbƒNƒ‚[ƒh)</small>
         </div>
         <form id="postForm" action="javascript:void 0;">
             <div>
-                <input type="submit" name="submit" value="æ›¸ãè¾¼ã‚€">
+                <input type="submit" name="submit" value="‘‚«ž‚Þ">
                 <label>
-                    åå‰ï¼š<input name="FROM" size="19">
+                    –¼‘OF<input name="FROM" size="19">
                 </label>
                 <label>
-                    E-mail<small style="font-size:xx-small;">(çœç•¥å¯)</small>
-                    ï¼š<input name="mail" size="19">
+                    E-mail<small style="font-size:xx-small;">(È—ª‰Â)</small>
+                    F<input name="mail" size="19">
                 </label>
                 <br>
                 <textarea name="MESSAGE" cols="70" rows="5"></textarea>
@@ -192,62 +192,62 @@
                 <input type="hidden" name="time" value="1708177374">
                 <br>
                 <label>
-                    <input type="checkbox" value="sans-serif">AAãƒ¢ãƒ¼ãƒ‰
+                    <input type="checkbox" value="sans-serif">AAƒ‚[ƒh
                 </label>
                 &nbsp;
                 <label>
-                    <input type="checkbox" id="isFixedForm">å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ ä½ç½®å›ºå®š
+                    <input type="checkbox" id="isFixedForm">“ü—ÍƒtƒH[ƒ€ˆÊ’uŒÅ’è
                 </label>
-                &nbsp;<input type="button" value="ðŸŽ™éŸ³å£°å…¥åŠ›">
-                &nbsp;<input type="button" value="ðŸ”¡QRå…¥åŠ›">
+                &nbsp;<input type="button" value="?‰¹º“ü—Í">
+                &nbsp;<input type="button" value="?QR“ü—Í">
             </div>
         </form>
         <form action="//find.2ch.sc/" target="_blank">
             <div style="position: fixed; right: 0px; top: 0px; background-color: lavender; border: 1px outset lavender; text-align: right;">
-                <span id="toggleIdNum" title="ID ãƒ¬ã‚¹æ•°è¡¨ç¤ºåˆ‡æ›¿" tabindex="0" style="background-color: dimgray; border: 2px outset dimgray; cursor: default; font-size: 0.75em; color: palegreen;">ID</span>
-                <span title="read.cgi ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿" tabindex="0" style="background-color: dimgray; border: 2px outset dimgray; color: palegreen; cursor: default; font-size: 0.75em; margin-right: 1px;">â—Ž</span>
-                <input name="STR" size="20" placeholder="æ¤œç´¢èªž">
+                <span id="toggleIdNum" title="ID ƒŒƒX”•\Ž¦Ø‘Ö" tabindex="0" style="background-color: dimgray; border: 2px outset dimgray; cursor: default; font-size: 0.75em; color: palegreen;">ID</span>
+                <span title="read.cgi ƒ‚[ƒhØ‘Ö" tabindex="0" style="background-color: dimgray; border: 2px outset dimgray; color: palegreen; cursor: default; font-size: 0.75em; margin-right: 1px;"></span>
+                <input name="STR" size="20" placeholder="ŒŸõŒê">
                 <label>
-                    <input type="checkbox" value="news4vip">ã“ã®æ¿ã®ã¿
+                    <input type="checkbox" value="news4vip">‚±‚Ì”Â‚Ì‚Ý
                 </label>
                 <select name="TYPE">
-                    <option value="TITLE" style="line-height: 1.2;">ã‚¹ãƒ¬ãƒƒãƒ‰ã‚¿ã‚¤ãƒˆãƒ«</option>
-                    <option value="POSTERS" style="line-height: 1.2;">æŠ•ç¨¿è€…</option>
-                    <option value="BODY" style="line-height: 1.2;">æœ¬æ–‡</option>
+                    <option value="TITLE" style="line-height: 1.2;">ƒXƒŒƒbƒhƒ^ƒCƒgƒ‹</option>
+                    <option value="POSTERS" style="line-height: 1.2;">“ŠeŽÒ</option>
+                    <option value="BODY" style="line-height: 1.2;">–{•¶</option>
                 </select>
                 <input type="hidden" name="COUNT" value="50">
                 <input type="hidden" name="ENCODING" value="SJIS">
                 <span>
-                    <input type="submit" value="æ¤œ ç´¢" style="border-color: cornflowerblue; background-color: cornflowerblue; color: white;">
+                    <input type="submit" value="ŒŸ õ" style="border-color: cornflowerblue; background-color: cornflowerblue; color: white;">
                     <ins style="background-color: lavender; border: 1px outset lavender; color: black; display: none; margin-top: 1.4em; padding: 0.5em; position: absolute; right: 0px; text-align: left; text-decoration: none; white-space: nowrap; border-radius: 8px; opacity: 0.95;">
                         <ul style="margin:0;">
                             <li>
-                                <a href="//find.2ch.sc/" target="_blank">ï¼’ã¡ã‚ƒã‚“ã­ã‚‹æ¤œç´¢</a>
-                                ã«ã‚ˆã‚‹æ¤œç´¢
+                                <a href="//find.2ch.sc/" target="_blank">‚Q‚¿‚á‚ñ‚Ë‚éŒŸõ</a>
+                                ‚É‚æ‚éŒŸõ
                             </li>
                             <li>
-                                ãƒ¬ã‚¹æŠ½å‡ºã¨ã¯æ›¸å¼ãŒç•°ãªã‚Šã¾ã™ (<a href="https://find.moritapo.jp/faq/faq.php" target="_blank">ãƒ˜ãƒ«ãƒ—</a>
-                                å‚ç…§)
+                                ƒŒƒX’Šo‚Æ‚Í‘Ž®‚ªˆÙ‚È‚è‚Ü‚· (<a href="https://find.moritapo.jp/faq/faq.php" target="_blank">ƒwƒ‹ƒv</a>
+                                ŽQÆ)
                             </li>
                         </ul>
                     </ins>
                 </span>
                 <span>
-                    <input type="button" value="ãƒ¬ã‚¹æŠ½å‡º" style="border-color: darkslategray; background-color: darkslategray; color: gold;">
+                    <input type="button" value="ƒŒƒX’Šo" style="border-color: darkslategray; background-color: darkslategray; color: gold;">
                     <ins style="background-color: lavender; border: 1px outset lavender; color: black; display: none; margin-top: 1.4em; padding: 0.5em; position: absolute; right: 0px; text-align: left; text-decoration: none; white-space: nowrap; border-radius: 8px; opacity: 0.95;">
                         <dl style="margin:0;">
-                            <dt style="font-weight:bold;">æ›¸å¼</dt>
-                            <dd>[!][0123:]æ­£è¦è¡¨ç¾</dd>
+                            <dt style="font-weight:bold;">‘Ž®</dt>
+                            <dd>[!][0123:]³‹K•\Œ»</dd>
                             <dt style="font-weight:bold;">!</dt>
-                            <dd>æ­£è¦è¡¨ç¾ã«ä¸€è‡´ã—ãªã„ãƒ¬ã‚¹ã‚’æŠ½å‡º (NGæ©Ÿèƒ½)</dd>
-                            <dd>ã“ã®æŒ‡å®šãŒç„¡ã‘ã‚Œã°ä¸€è‡´ã™ã‚‹ãƒ¬ã‚¹ã‚’æŠ½å‡º</dd>
+                            <dd>³‹K•\Œ»‚Éˆê’v‚µ‚È‚¢ƒŒƒX‚ð’Šo (NG‹@”\)</dd>
+                            <dd>‚±‚ÌŽw’è‚ª–³‚¯‚ê‚Îˆê’v‚·‚éƒŒƒX‚ð’Šo</dd>
                             <dt style="font-weight:bold;">0123:</dt>
-                            <dd>ä¸€è‡´å¯¾è±¡: 0=åå‰, 1=ãƒ¡ãƒ¼ãƒ«, 2=æ—¥ä»˜ãƒ»IDç­‰, 3=æœ¬æ–‡</dd>
-                            <dd>ã“ã®æŒ‡å®šãŒç„¡ã‘ã‚Œã°å…¨ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒå¯¾è±¡</dd>
-                            <dt style="font-weight:bold;">æ­£è¦è¡¨ç¾</dt>
-                            <dd>ãƒ¬ã‚¹ã‚’æŠ½å‡ºã™ã‚‹ãŸã‚ã®æ­£è¦è¡¨ç¾</dd>
-                            <dd>é©åˆã™ã‚‹ãƒ¬ã‚¹ãŒç„¡ã‘ã‚Œã° &gt;&gt;1 ã®ã¿è¡¨ç¤º</dd>
-                            <dd>ç©ºæ¬„ãªã‚‰åˆæœŸçŠ¶æ…‹ã«æˆ»ã‚‹</dd>
+                            <dd>ˆê’v‘ÎÛ: 0=–¼‘O, 1=ƒ[ƒ‹, 2=“ú•tEID“™, 3=–{•¶</dd>
+                            <dd>‚±‚ÌŽw’è‚ª–³‚¯‚ê‚Î‘SƒtƒB[ƒ‹ƒh‚ª‘ÎÛ</dd>
+                            <dt style="font-weight:bold;">³‹K•\Œ»</dt>
+                            <dd>ƒŒƒX‚ð’Šo‚·‚é‚½‚ß‚Ì³‹K•\Œ»</dd>
+                            <dd>“K‡‚·‚éƒŒƒX‚ª–³‚¯‚ê‚Î &gt;&gt;1 ‚Ì‚Ý•\Ž¦</dd>
+                            <dd>‹ó—“‚È‚ç‰Šúó‘Ô‚É–ß‚é</dd>
                         </dl>
                     </ins>
                 </span>
